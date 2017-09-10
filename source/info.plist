@@ -1742,7 +1742,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>variables</key>
 	<dict>
 		<key>BibTeXtoJSON</key>
-		<string>true</string>
+		<string>false</string>
 		<key>appendScopusNotes</key>
 		<string>true</string>
 		<key>exportPath</key>
@@ -1755,7 +1755,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.0.2</string>
+	<string>1.0.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

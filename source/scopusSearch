@@ -5,17 +5,6 @@ require 'json'
 require 'cgi'
 require 'optparse' # ruby standard option parser
 
-if ARGV[-1] == 'DEBUG' # Enable remote debugger
-  require 'byebug/core'
-  require 'byebug'
-  PORT = 8989
-  STDOUT.puts "\n!!!---DEBUG Server started on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
-  Byebug.wait_connection = true
-  Byebug.start_server('127.0.0.1', PORT)
-  ARGV.pop
-  byebug
-end
-
 #--------------------------------class definitiom
 class ScopusSearch
   attr_accessor :options, :version, :using_alfred
@@ -25,7 +14,7 @@ class ScopusSearch
   #--------------------- constructor
   def initialize # set up class
     @options = OPT.new('7f59af901d2d86f78a1fd60c1bf9426a', 
-                        '', '', 'scopus', false, true)
+                      '', '', 'scopus', false, true)
     @version = VER
     @using_alfred = false
     @surl = ''
@@ -241,7 +230,14 @@ end
 key = ENV['scopusKey']
 ss.options.key = key unless key.nil? || key.empty?
 
-# if not DOI try to get our DOI directly from the selected ref in Bookends
+# check ENV for append option, overrides ARGV
+append = ENV['appendScopusNotes']
+unless append.nil? || append.empty?
+  ss.options.append = true
+  ss.options.append = false if append.to_s =~ /(false|0)/
+end
+
+# if no DOI try to get our DOI directly from the selected ref in Bookends
 if ss.options.doi.empty?
   uuid = ss.osascript <<-EOT
   tell application "Bookends"
