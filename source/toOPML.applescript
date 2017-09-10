@@ -1,5 +1,5 @@
 #!/usr/bin/osascript
---Script to Export Bookends Notes to OPML file v1.15
+--Script to Export Bookends Notes to OPML file v1.16
 --Written by Dave Glogowski (modified by iandol)
 --07 August 2017
 --
@@ -19,7 +19,7 @@
 
 on run argv
 	--Version------------------------------------------------------------------------
-	set myVersion to 1.15
+	set myVersion to 1.16
 
 	--Start Time----------------------------------------------------------------------
 	set originalT to (time of (current date))
@@ -84,22 +84,20 @@ on run argv
 
 	set homePath to POSIX path of (path to home folder)
 	if (count of argv) > 0 then
-    set myPath to POSIX path of homePath & (item 1 of argv)
-  else
-    set myPath to POSIX path of (path to desktop) 
-  end if
+		set myPath to POSIX path of homePath & (item 1 of argv)
+	else
+		set myPath to POSIX path of (path to desktop) 
+	end if
 	set myFile to myPath & "BE-Selection.opml" as POSIX file
 	
 	--Interaction with Bookends-----------------------------------------------------------
 	tell application "Bookends"
 		activate
-		
 		--get ids for selected bookends references 
 		set selected_ids to «event ToySRUID» "Selection"
-		
 		--test to make sure user selected Bookends references
 		if selected_ids is "" then
-			display dialog "No Boookends References were selected." & return & return & "Please select 1 or more references and restrart"
+			display dialog "No Boookends References were selected." & return & return & "Please select 1 or more references and restart"
 			return false
 		end if
 		

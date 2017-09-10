@@ -5,11 +5,11 @@ require 'json'
 require 'cgi'
 require 'optparse' # ruby standard option parser
 
-if ARGV[-1] == 'DEBUG' # pass DEBUG as last option to trigger remote debugger, need byebug gem
+if ARGV[-1] == 'DEBUG' # Enable remote debugger
   require 'byebug/core'
   require 'byebug'
   PORT = 8989
-  STDOUT.puts "\n!!!---DEBUG Server on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
+  STDOUT.puts "\n!!!---DEBUG Server started on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
   Byebug.wait_connection = true
   Byebug.start_server('127.0.0.1', PORT)
   ARGV.pop
@@ -19,13 +19,13 @@ end
 #--------------------------------class definitiom
 class ScopusSearch
   attr_accessor :options, :version, :using_alfred
-  VER = '1.0.5'.freeze
-  OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs)
+  VER = '1.0.6'.freeze
+  OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs, :append)
   
   #--------------------- constructor
   def initialize # set up class
     @options = OPT.new('7f59af901d2d86f78a1fd60c1bf9426a', 
-                        '', '', 'scopus', false)
+                        '', '', 'scopus', false, true)
     @version = VER
     @using_alfred = false
     @surl = ''
@@ -52,7 +52,12 @@ class ScopusSearch
       opts.on('-s', '--source database', 'scopus (default) or scidir?') do |v|
         @options[:source] = v
       end
-      opts.on('-o', '--open ', 'true|false open scopus URLs in browser?') do |v|
+      opts.on('-a', '--append [true]|false', 'append URLS to Bookends note') do |v|
+        op = true
+        op = false if v.to_s =~ /(false|0)/
+        @options[:append] = op
+      end
+      opts.on('-o', '--open true|[false] ', 'open URLs in browser?') do |v|
         op = false
         op = true if v.to_s =~ /(true|1)/
         @options[:openURLs] = op
@@ -184,6 +189,7 @@ class ScopusSearch
 
   def writeNotes
     return unless @success == true
+    return unless @options.append == true
     return if @options.uuid.empty?
     puts "Will try to write to ID=#{options.uuid}" unless using_alfred
     newnotea = '#SCOPUS URL:'
@@ -204,7 +210,7 @@ class ScopusSearch
   end
 
   def open_links
-    return if @options.openURLs == false
+    return unless @options.openURLs == true
     return unless @success == true
     puts 'Will open Scopus Links in browser...' unless using_alfred
     cmd = "open \"#{@surl}\""
@@ -261,5 +267,5 @@ if ss.options.doi.empty?
 else
   ss.run
   ss.writeNotes
-  ss.open_links if ss.options.openURLs == true
+  ss.open_links
 end
