@@ -1,0 +1,265 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+require 'json'
+require 'cgi'
+require 'optparse' # ruby standard option parser
+
+if ARGV[-1] == 'DEBUG' # pass DEBUG as last option to trigger remote debugger, need byebug gem
+  require 'byebug/core'
+  require 'byebug'
+  PORT = 8989
+  STDOUT.puts "\n!!!---DEBUG Server on localhost:#{PORT} @ " + Time.now.to_s + "\n\n"
+  Byebug.wait_connection = true
+  Byebug.start_server('127.0.0.1', PORT)
+  ARGV.pop
+  byebug
+end
+
+#--------------------------------class definitiom
+class ScopusSearch
+  attr_accessor :options, :version, :using_alfred
+  VER = '1.0.5'.freeze
+  OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs)
+  
+  #--------------------- constructor
+  def initialize # set up class
+    @options = OPT.new('7f59af901d2d86f78a1fd60c1bf9426a', 
+                        '', '', 'scopus', false)
+    @version = VER
+    @using_alfred = false
+    @surl = ''
+    @scite = ''
+    @ncite = ''
+    @uuid = ''
+    @title = ''
+    @subtitle = ''
+    @success = false
+  end
+
+  # ###############################parse inputs
+  def parseInputs(_arg)
+    optparse = OptionParser.new do |opts|
+      opts.banner = 'ScopusSearch V' + @version + "\n"
+      opts.banner += "=======================\n"
+      opts.banner += 'Pass a DOI and apiKey and get the Scopus URLs back'
+      opts.on('-k', '--key KEY', 'API KEY?') do |v|
+        @options[:key] = v
+      end
+      opts.on('-d', '--doi DOI', 'DOI to search for?') do |v|
+        @options[:doi] = v
+      end
+      opts.on('-s', '--source database', 'scopus (default) or scidir?') do |v|
+        @options[:source] = v
+      end
+      opts.on('-o', '--open ', 'true|false open scopus URLs in browser?') do |v|
+        op = false
+        op = true if v.to_s =~ /(true|1)/
+        @options[:openURLs] = op
+      end
+      opts.on('-h', '--help', 'Prints this help!') do
+        puts optparse
+        exit(0)
+      end
+    end # end OptionParser
+    optparse.parse!
+  end # end parseInputs
+
+  def run
+    returnNullResults('Incomplete input options...') if options.doi.nil? || options.key.nil?
+    url = 'http://api.elsevier.com/content/search/' + options.source
+    url += '?query=DOI%28' + CGI.escape(@options.doi) + '%29'
+    url += '&apiKey=' + @options.key
+    uri = URI(url)
+    begin
+      response = Net::HTTP.get(uri)
+      # this is better but doesn't work in the old Ruby supplied in macOS
+      # http = Net::HTTP.new(uri.host, uri.port)
+      # request = Net::HTTP::Get.new(uri.request_uri)
+      # request.add_field('Accept', 'application/json')
+      # response = http.request(request)
+      # response = response.body
+    rescue Net::ReadTimeout => e
+      response = ''
+    end
+    response, n, json = parseResponse(response)
+    if n > 0
+      parseJSON(json)
+      returnResults
+    else
+      returnNullResults(response)
+    end
+  end
+
+  def parseResponse(response)
+    if response == ''
+      n = 0
+      response = 'Response empty'
+      json = ''
+    elsif response =~ /service-error/
+      n = 0
+      response = 'Service Error'
+      json = ''
+    elsif response =~ /Result set was empty/
+      n = 0
+      response = 'Result set was empty'
+      json = ''
+    else
+      json = JSON.parse(response)
+      n = json['search-results']['opensearch:totalResults'].to_i
+    end
+    return response, n, json
+  end
+
+  def parseJSON(json)
+    r = json['search-results']['entry']
+    r.each do |re|
+      @uuid = re['dc:identifier']
+      @uuid = 'none' if @uuid.nil?
+      @title = re['dc:title']
+      @creator = re['dc:creator']
+      links = re['link']
+      links.each do |lnk|
+        if lnk['@ref'] == options.source
+          @surl = lnk['@href']
+        elsif lnk['@ref'] == 'scopus-citedby'
+          @scite = lnk['@href']
+        elsif lnk['@ref'] == 'first'
+          @scite = lnk['@href']
+        end
+      end
+    end
+    @success = true
+  end
+
+  def returnResults
+    if @using_alfred
+      jsono = "{\"items\": [    \n{\n"
+      jsono += "\t\"uid\": \"" + @uuid + "A\",\n"
+      jsono += "\t\"arg\": \"" + @surl + "\",\n"
+      jsono += "\t\"title\": \"" + @title + "\",\n"
+      jsono += "\t\"subtitle\": \"Open URL to the reference...\"\n"
+      if !@scite.empty?
+        jsono += "},\n"
+        jsono += "{\n"
+        jsono += "\t\"uid\": \"" + @uuid + "B\",\n"
+        jsono += "\t\"arg\": \"" + @scite + "\",\n"
+        jsono += "\t\"title\": \"CITING: " + @title + "\",\n"
+        jsono += "\t\"subtitle\": \"Open URL for papers that cite this paper...\"\n"
+      end
+      jsono += "}\n]}"
+      puts jsono
+    else
+      puts 'SCOPUS URL: ' + @surl + "\nSCOPUS CITED: " + @scite
+    end
+  end
+
+  def returnNoDOI(response)
+    if @using_alfred
+      jsono = "{\"items\": [    \n{\n"
+      jsono += "\t\"uid\": \"" + 'error' + "\",\n"
+      jsono += "\t\"arg\": \"" + ' ' + "\",\n"
+      jsono += "\t\"title\": \"No DOI was specified!\",\n"
+      jsono += "\t\"subtitle\": \"" + @options.uuid + ': ' + response + "\"\n"
+      jsono += "}\n\n]}"
+      puts jsono
+    else
+      puts 'No DOI was specified or found: ' + @options.uuid + ' - ' + response
+    end
+  end
+
+  def returnNullResults(response)
+    if @using_alfred
+      jsono = "{\"items\": [    \n{\n"
+      jsono += "\t\"uid\": \"" + 'error' + "\",\n"
+      jsono += "\t\"arg\": \"" + ' ' + "\",\n"
+      jsono += "\t\"title\": \"Sorry, no entry in Scopus was found\",\n"
+      jsono += "\t\"subtitle\": \"" + @options.doi + ': ' + response + "\"\n"
+      jsono += "}\n\n]}"
+      puts jsono
+    else
+      puts 'No results found for: ' + @options.doi + ' - ' + response
+    end
+  end
+
+  def writeNotes
+    return unless @success == true
+    return if @options.uuid.empty?
+    puts "Will try to write to ID=#{options.uuid}" unless using_alfred
+    newnotea = '#SCOPUS URL:'
+    newnoteb = @surl
+    newnotec = '#SCOPUS CITED:'
+    newnoted = @scite
+    osascript <<-EOT
+    tell application "Bookends"
+      set notes to «event ToySRFLD» #{options.uuid} given string:"notes"
+      if notes is not equal to "" then
+        set notes to notes & return & return
+      end if
+      set out to notes & "#{newnotea}" & return & "#{newnoteb}" & return & return & "#{newnotec}" & return & "#{newnoted}"
+      «event ToySSFLD» #{options.uuid} given «class FLDN»:"notes", string:out
+    end tell
+    EOT
+    puts "Finished appending to the notes of ID=#{options.uuid}" unless using_alfred
+  end
+
+  def open_links
+    return if @options.openURLs == false
+    return unless @success == true
+    puts 'Will open Scopus Links in browser...' unless using_alfred
+    cmd = "open \"#{@surl}\""
+    IO.popen(cmd)
+    cmd = "open \"#{@scite}\""
+    IO.popen(cmd)
+  end
+
+  # this converts to -e line format so osascript can run, pass in a heredoc
+  # beware this splits on \n so can't include them in the applescript itself
+  def osascript(script)
+    cmd = ['osascript'] + script.split(/\n/).map { |line| ['-e', line] }.flatten
+    IO.popen(cmd) { |f| return f.gets }
+  end
+end #--------------- end ScopusSearch class
+
+#-------------------------------------------------
+ss = ScopusSearch.new
+ss.parseInputs(ARGV)
+
+# check if running under alfred
+is_alfred = ENV['alfred_version']
+unless is_alfred.nil?
+  ss.using_alfred = true unless is_alfred.empty?
+end
+
+# check ENV for scopusKey, overrides default/ARGV
+key = ENV['scopusKey']
+ss.options.key = key unless key.nil? || key.empty?
+
+# if not DOI try to get our DOI directly from the selected ref in Bookends
+if ss.options.doi.empty?
+  uuid = ss.osascript <<-EOT
+  tell application "Bookends"
+    set selected_id to «event ToySRUID» "Selection"
+    return selected_id
+  end tell
+  EOT
+  uuid.chomp!.strip!
+  ss.options.uuid = uuid
+  doi = ss.osascript <<-EOT
+  tell application "Bookends"
+    set doi to «event ToySRFLD» #{uuid} given string:"user17"
+    return doi
+  end tell
+  EOT
+  doi = '' if doi.nil?
+  doi.chomp!.strip!
+  ss.options.doi = doi
+end
+
+if ss.options.doi.empty?
+  ss.returnNoDOI
+else
+  ss.run
+  ss.writeNotes
+  ss.open_links if ss.options.openURLs == true
+end
