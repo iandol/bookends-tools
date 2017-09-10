@@ -1,12 +1,12 @@
 # Bookends Tools
 
-Bookends is a bibliographic/research manager for macOS. This Alfred workflow brings 8 tools together in one interface to interact with Bookends. 
+[Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates 8 tools together in one interface to interact with Bookends and other apps. You can use Alfred keywords (*be…*) and/or bind your preferred key combination to trigger these directly.
 
-[Download it here](https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow)
+[Download it here…](https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow)
 
 ![Workflow screenshot](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/workflow.png)
 
-key: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨️: trigger tool and enter some text`  
+**key**: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨️: trigger tool and enter some text`  
 
 1. **beidsearch** 📄 — Find a selected uniqueID in Bookends. For example, if you have a temporary citation like {Koffka, 1922, #6475} in your word-processor, double-click select the Bookends ID `6475`, then trigger this workflow and it will find the reference in Bookends for you.
 2. **bebrowser** 📄 — Search selected text in Bookends Pubmed browser. This requires that you have the Pubmed interface selected in the bookends browser. Also sometimes the paste into the search field fails, in which case you need to manually press ⌘V and ⌅ (enter).
