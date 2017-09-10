@@ -1742,7 +1742,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>variables</key>
 	<dict>
 		<key>BibTeXtoJSON</key>
-		<string>false</string>
+		<string>true</string>
 		<key>appendScopusNotes</key>
 		<string>true</string>
 		<key>exportPath</key>
