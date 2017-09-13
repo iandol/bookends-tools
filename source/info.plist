@@ -21,6 +21,32 @@
 				<false/>
 			</dict>
 		</array>
+		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>1BC27066-8B01-42C8-A6D1-1D44312945D3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>20DFCB80-8C35-46DB-97E3-B7A9D7C2C372</key>
 		<array>
 			<dict>
@@ -112,8 +138,31 @@
 				<false/>
 			</dict>
 		</array>
+		<key>399A3D13-22C7-47B5-9570-F9E31B4A12A1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>19E75CB7-31D3-423C-9831-1D4DA9343BC6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>42E1E519-7522-4BE7-987E-1A39E5A92C64</key>
 		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>19E75CB7-31D3-423C-9831-1D4DA9343BC6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 			<dict>
 				<key>destinationuid</key>
 				<string>911559DD-772D-466A-AC11-0B9A9A99B6F8</string>
@@ -198,7 +247,18 @@
 			</dict>
 		</array>
 		<key>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>19E75CB7-31D3-423C-9831-1D4DA9343BC6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>63E2A815-A08E-4E62-811D-C8F3D06D738B</key>
 		<array>
 			<dict>
@@ -216,7 +276,20 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>731519D0-A085-43A8-9641-3696D9A5FFDA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -239,7 +312,18 @@
 			</dict>
 		</array>
 		<key>9A9A0A3C-2C7F-4090-B509-E425513C003F</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>19E75CB7-31D3-423C-9831-1D4DA9343BC6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>A58CE08D-D622-4B55-81C3-7D948E3CB220</key>
 		<array>
 			<dict>
@@ -280,7 +364,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<string>1BC27066-8B01-42C8-A6D1-1D44312945D3</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -306,7 +390,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -317,16 +401,6 @@
 		</array>
 		<key>D5390C3E-D89A-4E54-BFE3-36C24C54DF3E</key>
 		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
 			<dict>
 				<key>destinationuid</key>
 				<string>EBB14C37-DC9A-447A-B292-D09CC96B8EAD</string>
@@ -381,7 +455,20 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<string>1BC27066-8B01-42C8-A6D1-1D44312945D3</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>EBB14C37-DC9A-447A-B292-D09CC96B8EAD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -394,7 +481,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
+				<string>1BC27066-8B01-42C8-A6D1-1D44312945D3</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -894,6 +981,30 @@ fi #find</string>
 			<string>9CE1CCA5-C5F0-485B-BB88-C230295DB203</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>19E75CB7-31D3-423C-9831-1D4DA9343BC6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>1BC27066-8B01-42C8-A6D1-1D44312945D3</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1399,13 +1510,20 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>readme</key>
 	<string>A set of Bookends scripts to perform 8 different functions:
 
-1. Find selected-text uniqueID in Bookends
-2. Search selected-text in Bookends Pubmed browser
+1. Find selected-text uniqueID in Bookends.
+
+2. Search selected-text in Bookends Pubmed browser.
+
 3. Take selected-text i.e. "(Doe et al., 2005)" citation, clean it up to "Doe 2005" and send it to Bookend's quick search.
+
 4. Create OPML file with abstract and notes from selected Bookends refs, useful to import into Scrivener research folder etc.
+
 5. Search Scopus with Seleced Bookends ref, append scopus and cited-by URLS to reference notes.
+
 6. Generate BibTeX bibliography file for a particular group and all subgroups. Optionally convert to JSON as this is faster to parse.
+
 7. Search for an author, get results list, the paste temporary citation in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).
+
 8. Search for an author, get results list, the paste formatted reference in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).</string>
 	<key>uidata</key>
 	<dict>
@@ -1424,6 +1542,20 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 			<integer>580</integer>
 			<key>ypos</key>
 			<integer>930</integer>
+		</dict>
+		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>1120</integer>
+			<key>ypos</key>
+			<integer>360</integer>
+		</dict>
+		<key>1BC27066-8B01-42C8-A6D1-1D44312945D3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>470</integer>
+			<key>ypos</key>
+			<integer>360</integer>
 		</dict>
 		<key>20DFCB80-8C35-46DB-97E3-B7A9D7C2C372</key>
 		<dict>
@@ -1493,6 +1625,13 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 			<integer>480</integer>
 			<key>ypos</key>
 			<integer>530</integer>
+		</dict>
+		<key>399A3D13-22C7-47B5-9570-F9E31B4A12A1</key>
+		<dict>
+			<key>xpos</key>
+			<integer>860</integer>
+			<key>ypos</key>
+			<integer>360</integer>
 		</dict>
 		<key>42E1E519-7522-4BE7-987E-1A39E5A92C64</key>
 		<dict>
@@ -1613,9 +1752,9 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>790</integer>
+			<integer>1160</integer>
 			<key>ypos</key>
-			<integer>350</integer>
+			<integer>330</integer>
 		</dict>
 		<key>A58CE08D-D622-4B55-81C3-7D948E3CB220</key>
 		<dict>
@@ -1736,11 +1875,13 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>variables</key>
 	<dict>
 		<key>BibTeXtoJSON</key>
-		<string>true</string>
+		<string>false</string>
 		<key>appendScopusNotes</key>
 		<string>true</string>
 		<key>exportPath</key>
 		<string>Desktop/</string>
+		<key>protectBibTitles</key>
+		<string>false</string>
 		<key>scopusKey</key>
 		<string>49aa3c8cee1ffcc90be782be61ec8383</string>
 	</dict>
@@ -1749,7 +1890,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.0.3</string>
+	<string>1.0.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

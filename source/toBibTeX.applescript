@@ -1,8 +1,8 @@
 #!/usr/bin/osascript
-
 (*
 Script originally written by Naupaka Zimmerman, modified by iandol
 August 10, 2017
+
 
 MIT License
 
@@ -26,6 +26,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
+
+use AppleScript version "2.4"
+use scripting additions
 
 (*
 Trim whitespace, from http://macscripter.net/viewtopic.php?id=18519
@@ -77,12 +80,19 @@ on run argv
 	--start time
 	set originalT to (time of (current date))
 	--version
-	set myVersion to 1.12
+	set myVersion to 1.13
 	-- store default delimiters
 	set oldDelimiters to AppleScript's text item delimiters
+	-- protect titles?
+	set protectBibTitles to (system attribute "protectBibTitles" as string)
+	if protectBibTitles is "true" then
+		set protectBibTitles to true
+	else
+		set protectBibTitles to false
+	end if
 	-- get JSON option
 	set toJSON to (system attribute "BibTeXtoJSON" as string)
-	if toJSON is "true"
+	if toJSON is "true" then
 		set toJSON to true
 	else
 		set toJSON to false
@@ -91,7 +101,7 @@ on run argv
 	set cpPath to "/usr/local/bin/pandoc-citeproc"
 	set isCiteproc to false
 	tell application "Finder" to if exists cpPath as POSIX file then set isCiteproc to true
-
+	
 	-- parse input
 	set homePath to POSIX path of (path to home folder)
 	if (count of argv) > 1 then
@@ -99,10 +109,10 @@ on run argv
 		set theGroups to items 2 thru -1 of argv
 	else if (count of argv) > 0 then
 		set myPath to POSIX path of homePath & (item 1 of argv)
-		set theGroups to "Selection" 
+		set theGroups to "Selection"
 	else
-		set myPath to POSIX path of (path to desktop) 
-		set theGroups to "Selection" 
+		set myPath to POSIX path of (path to desktop)
+		set theGroups to "Selection"
 	end if
 	set AppleScript's text item delimiters to " "
 	set myGroupsToExport to theGroups as text
@@ -131,73 +141,90 @@ on run argv
 		set output to ("Path: " & myPath & " | " & "Groups:" & myGroupArray & "." as string)
 		set AppleScript's text item delimiters to oldDelimiters -- change back to default
 	end if
-
+	
 	-- loop over each folder matching the pattern and export each to a bibtex file
 	repeat with myGroup in myGroupArray
-		set thisFile to (myPath & (myGroup as string) & ".bib") as POSIX file
-		set thisJSONFile to (myPath & (myGroup as string) & ".json") as POSIX file
+		set thisFile to (myPath & "/" & (myGroup as string) & ".bib") as POSIX file
+		set thisJSONFile to (myPath & "/" & (myGroup as string) & ".json") as POSIX file
 		set quotedName to quoted form of POSIX path of thisFile
 		set quotedJSONName to quoted form of POSIX path of thisJSONFile
 		set myFile to open for access thisFile with write permission
 		set eof of myFile to 0 --make sure we overwrite
-
+		
 		try
 			tell application "Bookends"
 				-- get a list of all unique reference IDs in the specified group 
 				set myListString to «event ToySRUID» myGroup as string
-				-- convert to list 
-				set AppleScript's text item delimiters to return
-				set myList to text items of myListString
-				-- set up the loop to batch fetch sets of references, 
-				-- in theory this should be more efficient, 
-				-- and saves around 1-2 seconds per 1000 exported
-				set steps to 100
-				set listLength to length of myList
-				set nLoop to round (listLength / steps) rounding up
-				set thisLoop to 1
+			end tell
+			-- convert to list 
+			set AppleScript's text item delimiters to return
+			set myList to text items of myListString
+			-- set up the loop to batch fetch sets of references, 
+			-- in theory this should be more efficient, 
+			-- and saves around 1-2 seconds per 1000 exported
+			set steps to 25
+			set listLength to length of myList
+			set nLoop to round (listLength / steps) rounding up
+			set thisLoop to 1
+			
+			set progress total steps to nLoop
+			set progress completed steps to 0
+			set progress description to "Processing group: " & myGroup & " # refs: " & listLength
+			set progress additional description to "...please be patient"
+			
+			-- iterate through list writing each entry
+			repeat while thisLoop is less than or equal to nLoop
+				-- set the batch index range
+				set startindex to (steps * thisLoop) - (steps - 1)
+				set endindex to (steps * thisLoop)
+				if endindex is greater than listLength then
+					set endindex to listLength
+				end if
+				-- select current batch of items
+				set thisListItems to items startindex thru endindex of myList
+				set thisList to thisListItems as string
 				
-				-- iterate through list writing each entry
-				repeat while thisLoop is less than or equal to nLoop
-					-- set the batch index range
-					set startindex to (steps * thisLoop) - (steps - 1)
-					set endindex to (steps * thisLoop)
-					if endindex is greater than listLength then
-						set endindex to listLength
-					end if
-					-- select current batch of items
-					set thisListItems to items startindex thru endindex of myList
-					set thisList to thisListItems as string
-					
-					-- fetch the BibTeX
+				-- fetch the BibTeX
+				tell application "Bookends"
 					set myBibTex to «event ToySGUID» thisList given «class RRTF»:"false", string:"bibtex"
-					
-					-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
-					write myBibTex to myFile as «class utf8»
-					
-					-- update the loop number
-					set thisLoop to thisLoop + 1
-					
-				end repeat -- thisLoop
-			end tell -- Bookends
+				end tell
+				
+				-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
+				write myBibTex to myFile as «class utf8»
+				
+				-- update progress bar				
+				set progress completed steps to thisLoop
+				set progress additional description to "Reference block: " & thisLoop & " completed…"
+				
+				-- update the loop number
+				set thisLoop to thisLoop + 1
+				
+			end repeat -- thisLoop
+			-- Reset the progress information
+			set progress total steps to 0
+			set progress completed steps to 0
+			set progress description to ""
+			set progress additional description to ""
 		on error
 			try
 				close access myFile
 				set AppleScript's text item delimiters to oldDelimiters
 			end try
-			return false
+			return "Problem processing references..."
 		end try
-
+		
 		close access myFile
 		
-		-- To force case of the title we have to wrap it in an extra { }
-		-- so we have to do it with sed (grrr applescript!)
-		set permBibPath to POSIX path of thisFile
-		set tempBibPath to permBibPath & ".tmp"
-		set permBibPath to quoted form of permBibPath
-		set tempBibPath to quoted form of tempBibPath
-		set cmd to "sed -E 's/(title = )({[^}]*})/\\1{\\2}/g' " & permBibPath & " > " & tempBibPath & " && mv " & tempBibPath & " " & permBibPath
-		do shell script cmd
-
+		if protectBibTitles is true then
+			-- To force case of the title we have to wrap it in an extra { }
+			-- so we have to do it with sed (grrr applescript!)
+			set permBibPath to POSIX path of thisFile
+			set tempBibPath to permBibPath & ".tmp"
+			set permBibPath to quoted form of permBibPath
+			set tempBibPath to quoted form of tempBibPath
+			set cmd to "sed -E 's/(title = )({[^}]*})/\\1{\\2}/g' " & permBibPath & " > " & tempBibPath & " && mv " & tempBibPath & " " & permBibPath
+			do shell script cmd
+		end if
 		-- Convert to JSON? JSON is much faster to parse for pandoc-citeproc
 		if (toJSON is true) and (isCiteproc is true) then
 			set cmd to cpPath & " -j " & quotedName & " > " & quotedJSONName

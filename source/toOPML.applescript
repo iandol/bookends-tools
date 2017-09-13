@@ -79,17 +79,16 @@ on run argv
 		try
 			set AlertResult to display alert "Remove Bookends Header ONLY note cards?" buttons {"No", "Yes"} default button "Yes" giving up after 2
 		end try
-		if button returned of AlertResult is "No" then set remove_headers to false
+			if button returned of AlertResult is "No" then set remove_headers to false
 	end if
 
 	set homePath to POSIX path of (path to home folder)
 	if (count of argv) > 0 then
-		set myPath to POSIX path of homePath & (item 1 of argv)
+		set myPath to POSIX path of (homePath & (item 1 of argv) & "/")
 	else
 		set myPath to POSIX path of (path to desktop) 
 	end if
-	set myFile to myPath & "BE-Selection.opml" as POSIX file
-	
+	set myFile to (myPath & "BE-Selection.opml") as POSIX file
 	--Interaction with Bookends-----------------------------------------------------------
 	tell application "Bookends"
 		activate
