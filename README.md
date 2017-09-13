@@ -1,6 +1,6 @@
 # Bookends Tools
 
-[Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates 8 tools together in one interface to interact with Bookends and other apps. You can use Alfred keywords (*be…*) and/or bind your preferred key combination to trigger these directly.
+[Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates 8 tools together in one interface to interact with Bookends and other apps. You can use Alfred keywords (*be…*) and/or bind your preferred key combination to trigger these directly. It has been designed for Alfred 3, and should keep itself up-to-date.
 
 [Download it here…](https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow)
 
@@ -27,7 +27,7 @@ There are several workflow variables which let you modify some of the functional
 For the Scopus search tool, ideally [you should register for your own Scopus API key](https://dev.elsevier.com/) (without it it will use the demo key which may or may not work) and enter it in the workflow variables. The Scopus URLs also benefit from an institutional subscription, otherwise you will see a preview (which still contains useful information). 
 
 ## Sources
-Several of these very useful tools come from the following sources:
+Several of these very useful tools have been modified from the following sources:
 
 ### betoopml
 Thanks to Dave Glogowski (dave83); [Bookends forum thread](https://www.sonnysoftware.com/phpBB3/viewtopic.php?f=6&t=3882)
@@ -37,4 +37,7 @@ Thanks and MIT copyright to Naupaka Zimmerman; [Bookends forum thread](https://w
 
 ### becite & bebib
 Thanks to kseggleton; [Bookends forum thread](https://www.sonnysoftware.com/phpBB3/viewtopic.php?f=6&t=4051)
+
+### OneUpdater
+Thanks to Vitor for his excellent update system for Alfred workflows: [OneUpdater](https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater)
 

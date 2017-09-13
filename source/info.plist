@@ -588,8 +588,6 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1080,8 +1078,6 @@ echo "[#$BIBKEY]: $REFNAME"</string>
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1190,8 +1186,6 @@ echo "[#$BIBKEY]" | tr -d '\n'</string>
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1742,7 +1736,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>variables</key>
 	<dict>
 		<key>BibTeXtoJSON</key>
-		<string>false</string>
+		<string>true</string>
 		<key>appendScopusNotes</key>
 		<string>true</string>
 		<key>exportPath</key>
