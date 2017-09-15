@@ -30,9 +30,8 @@ SOFTWARE.
 use AppleScript version "2.4"
 use scripting additions
 
-(*
-Trim whitespace, from http://macscripter.net/viewtopic.php?id=18519
-*)
+
+-- Trim whitespace, from http://macscripter.net/viewtopic.php?id=18519
 on trim(someText)
 	repeat until someText does not start with " "
 		set someText to text 2 thru -1 of someText
@@ -45,15 +44,14 @@ on trim(someText)
 	return someText
 end trim
 
-(*
-Function to split returned values on a character into an array
-and also to parse out only those that match the query string.
-E.g. if you have a folder of groups called "Manuscripts/", this will
-find all groups with that word in their path and export them.
-It will also work with the name of just a single specific group.
-Based on code from this page: 
-http://erikslab.com/2007/08/31/applescript-how-to-split-a-string/
-*)
+
+-- Function to split returned values on a character into an array
+-- and also to parse out only those that match the query string.
+-- E.g. if you have a folder of groups called "Manuscripts/", this will
+-- find all groups with that word in their path and export them.
+-- It will also work with the name of just a single specific group.
+-- Based on code from this page: 
+-- http://erikslab.com/2007/08/31/applescript-how-to-split-a-string/
 on theSplit(allGroups, theDelimiter, myGroups)
 	-- set delimiters to delimiter to be used
 	set AppleScript's text item delimiters to theDelimiter
@@ -192,7 +190,7 @@ on run argv
 				-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
 				write myBibTex to myFile as «class utf8»
 				
-				-- update progress bar				
+				-- update progress bar        
 				set progress completed steps to thisLoop
 				set progress additional description to "Reference block: " & thisLoop & " completed…"
 				
@@ -224,12 +222,14 @@ on run argv
 			set tempBibPath to quoted form of tempBibPath
 			set cmd to "sed -E 's/(title = )({[^}]*})/\\1{\\2}/g' " & permBibPath & " > " & tempBibPath & " && mv " & tempBibPath & " " & permBibPath
 			do shell script cmd
+			set output to output & "(protect case)"
 		end if
 		-- Convert to JSON? JSON is much faster to parse for pandoc-citeproc
 		if (toJSON is true) and (isCiteproc is true) then
 			set cmd to cpPath & " -j " & quotedName & " > " & quotedJSONName
 			do shell script cmd
 			do shell script "rm -f " & quotedName
+			set output to output & "(to JSON)"
 		end if
 		
 	end repeat

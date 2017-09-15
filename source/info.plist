@@ -839,7 +839,7 @@
 				<key>keyword</key>
 				<string>betobibtex</string>
 				<key>subtext</key>
-				<string>Enter BE group name(s) to export to BibTeX file, seperate multiple groups with comma</string>
+				<string>Enter BE group name(s) to export to a BibTeX file; seperate multiple groups with comma</string>
 				<key>text</key>
 				<string>Bookends ⇨ BibTeX BIB file</string>
 				<key>withspace</key>
@@ -1546,7 +1546,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1120</integer>
+			<integer>1160</integer>
 			<key>ypos</key>
 			<integer>360</integer>
 		</dict>
@@ -1752,7 +1752,7 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>1160</integer>
+			<integer>1190</integer>
 			<key>ypos</key>
 			<integer>330</integer>
 		</dict>
