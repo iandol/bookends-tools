@@ -21,7 +21,14 @@
 
 ![variables](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/variables.png)  
 
-There are several workflow variables which let you modify some of the functionality. For example, `BibTeXtoJSON` allows you to save as a JSON file rather than a BIB file, which at least for Pandoc-citeproc is much faster (~3X) to parse. `appendScopusNotes` allows you to toggle the behaviour whereby the Scopus URLs are appended back to the Bookends reference note stream.
+There are several workflow variables which let you modify some of the functionality: 
+
+* `appendScopusNotes` allows you to toggle the behaviour whereby the Scopus URLs are appended back to the Bookends reference note stream. 
+* `BibTeXtoJSON` allows you to convert the BIB file to a JSON file, which at least for Pandoc-citeproc is much faster (~3X) to then process for the bibliography. 
+* `protectBibTitles` makes titles in the BIB file {{ wrapped }} so the case is not changed in subsequent processing.
+* `citationStyle` is the Bookends bibliographic style used by `bebib` when outputting the formatted reference.
+* `exportPath` used by `betoopml` and `betobibtex`
+* `scopusKey` your personal Scopus API key
 
 ### Scopus Info
 For the Scopus search tool, ideally [you should register for your own Scopus API key](https://dev.elsevier.com/) (without it it will use the demo key which may or may not work) and enter it in the workflow variables. The Scopus URLs also benefit from an institutional subscription, otherwise you will see a preview (which still contains useful information). 
