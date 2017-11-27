@@ -1,6 +1,6 @@
 # Bookends Tools
 
-[Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates 8 tools together in one interface to interact with Bookends and other apps. You can use Alfred keywords (*be…*) and/or bind your preferred key combination to trigger these directly. It has been designed for Alfred 3, and should keep itself up-to-date using [OneUpdater](https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater).
+[Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates 9 tools together in one interface to interact with Bookends and other apps. You can use Alfred keywords (*be…*) and/or bind your preferred key combination to trigger these directly. It has been designed for Alfred 3, and should keep itself up-to-date using [OneUpdater](https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater).
 
 [Download it here…](https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow)
 
@@ -16,6 +16,7 @@
 6. **betobibtex** ⌨️ — You enter the name of a Bookends static/smart group name and this will create a BibTeX bibliography file for those particular groups. Very useful for Pandoc and/or LaTeX workflows. You can optionally generate JSON. You can configure the export path in the workflow variables (default Desktop/). ![betobibtex](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/6.png)
 7. **becite** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/7.png)
 8. **bebib** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a formatted reference (⌘ pastes MMD style, ⌥ pastes Pandoc style).
+9. **betitle** ⌨️ — You enter a word in the title, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
 
 ### Workflow variables
 

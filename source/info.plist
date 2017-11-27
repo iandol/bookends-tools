@@ -34,6 +34,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>189BD0C8-69D6-4DC9-BC21-838C6C75A7DC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8AA82958-333B-45F1-A2B3-4FE01ECC5E1D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
 		<array>
 			<dict>
@@ -327,6 +340,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8E609FB8-E51F-4307-BF5F-0E03F3B314CD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>19E8EE0F-A73F-443B-964C-262A398C042B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>911559DD-772D-466A-AC11-0B9A9A99B6F8</key>
 		<array>
 			<dict>
@@ -399,6 +425,52 @@
 				<false/>
 			</dict>
 		</array>
+		<key>A85CDCE2-7C4E-4C47-A991-CF8BCC436219</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8AA82958-333B-45F1-A2B3-4FE01ECC5E1D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8E609FB8-E51F-4307-BF5F-0E03F3B314CD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>A85CDCE2-7C4E-4C47-A991-CF8BCC436219</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Paste MMD style citation [#Citation]</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>189BD0C8-69D6-4DC9-BC21-838C6C75A7DC</string>
+				<key>modifiers</key>
+				<integer>524288</integer>
+				<key>modifiersubtext</key>
+				<string>Paste Pandoc style citation [@Citation]</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B14F1D3F-1FBF-4B85-87D0-9346F0BA1141</key>
 		<array>
 			<dict>
@@ -430,6 +502,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>399A3D13-22C7-47B5-9570-F9E31B4A12A1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -945,12 +1030,13 @@
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
-				<string>readonly remote_info_plist='https://raw.githubusercontent.com/iandol/bookends-tools/master/source/info.plist' # URL of remote info.plist
-readonly workflow_url='https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow' # URL to directly download workflow or workflow download page
-readonly workflow_type='workflow' # Either 'workflow' if workflow_url points to direct download, or 'page' if it points to download page
-readonly frequency_check='4' # Days between update checks
+				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
+readonly remote_info_plist='https://raw.githubusercontent.com/iandol/bookends-tools/master/source/info.plist'
+readonly workflow_url='https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow'
+readonly download_type='workflow' 
+readonly frequency_check='4'
 
-# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED UNLESS YOU KNOW WHAT YOU ARE DOING
+# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
 function abort {
   echo "${1}" &gt;&amp;2
   exit 1
@@ -981,7 +1067,7 @@ readonly local_info_plist='info.plist'
 readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
 
 [[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
-[[ "${workflow_type}" =~ ^(workflow|page)$ ]] || abort "'workflow_type' (${workflow_type}) needs to be one of 'workflow' or 'page'."
+[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
 [[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
 
 # Check for updates
@@ -992,23 +1078,27 @@ if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
   curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
   readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
 
-  if [[ "${local_version}" != "${remote_version}" ]]; then
-    if [[ "${workflow_type}" == 'page' ]]; then
-      notification 'Opening download page…'
-      open "${workflow_url}"
-    else
-      if url_exists "${workflow_url}"; then
-        notification 'Downloading and installing…'
-        curl --silent --location --output "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow" "${workflow_url}"
-        open "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow"
-      else
-        abort "'workflow_url' (${workflow_url}) appears to not be reachable."
-      fi # url_exists
-    fi # workflow_type
-  else
+  if [[ "${local_version}" == "${remote_version}" ]]; then
     touch "${local_info_plist}" # Reset timer by touching local file
-  fi # diff
-fi #find</string>
+    exit 0
+  fi
+
+  if [[ "${download_type}" == 'page' ]]; then
+    notification 'Opening download page…'
+    open "${workflow_url}"
+    exit 0
+  fi
+
+  download_url="$([[ "${download_type}" == 'github_release' ]] &amp;&amp; curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest" | grep 'browser_download_url' | head -1 | sed -E 's/.*browser_download_url": "(.*)"/\1/' || echo "${workflow_url}")"
+
+  if url_exists "${download_url}"; then
+    notification 'Downloading and installing…'
+    curl --silent --location --output "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow" "${download_url}"
+    open "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow"
+  else
+    abort "'workflow_url' (${download_url}) appears to not be reachable."
+  fi
+fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -1532,6 +1622,197 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>osascript makeTempCitation.applescript $1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>8E609FB8-E51F-4307-BF5F-0E03F3B314CD</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{clipboard}</string>
+				<key>transient</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>19E8EE0F-A73F-443B-964C-262A398C042B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>8AA82958-333B-45F1-A2B3-4FE01ECC5E1D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>UUID="{query}"
+BIBKEY=$(/usr/bin/osascript &lt;&lt; EOT
+tell application "Bookends"
+    return «event ToySRFLD» "$UUID" given string:"user1"
+end tell
+EOT)
+echo "[#$BIBKEY]" | tr -d '\n'</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A85CDCE2-7C4E-4C47-A991-CF8BCC436219</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>betitle</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching database...</string>
+				<key>script</key>
+				<string>osascript findReferencesTitle.applescript $1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Enter title/keyword using simple search or REGEX (case insensitive)</string>
+				<key>title</key>
+				<string>BE search title ⇨ temporary citation</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>UUID="{query}"
+BIBKEY=$(/usr/bin/osascript &lt;&lt; EOT
+tell application "Bookends"
+    return «event ToySRFLD» "$UUID" given string:"user1"
+end tell
+EOT)
+echo "[@$BIBKEY]" | tr -d '\n'</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>189BD0C8-69D6-4DC9-BC21-838C6C75A7DC</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
@@ -1611,12 +1892,14 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>readme</key>
 	<string># Changelog
 
+1.0.6 — add betitle that searches within the reference title for a word.
+
 1.0.5 — add ⌥ to bebib to paste pandoc footnote format. bebib formatted ref now pastes in the target app. add environment variable to control the bibliography format for bebib
 
 
 # About 
 
-A set of Bookends scripts to perform 8 different functions:
+A set of Bookends scripts to perform 9 different functions:
 
 1. Find selected-text uniqueID in Bookends.
 
@@ -1632,7 +1915,9 @@ A set of Bookends scripts to perform 8 different functions:
 
 7. Search for an author, get results list, the paste temporary citation in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).
 
-8. Search for an author, get results list, the paste formatted reference in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).</string>
+8. Search for an author, get results list, the paste formatted reference in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).
+
+9. Search within the title, get results list, the paste temporary citation in current app (⌘ pastes MMD style, ⌥ pastes Pandoc style).</string>
 	<key>uidata</key>
 	<dict>
 		<key>07A0668C-9537-4BA7-8D1F-2F10DF7C8949</key>
@@ -1647,9 +1932,9 @@ A set of Bookends scripts to perform 8 different functions:
 		<key>0A143F1B-B4DB-4F22-9C72-4E840C2245A0</key>
 		<dict>
 			<key>xpos</key>
-			<integer>580</integer>
+			<integer>520</integer>
 			<key>ypos</key>
-			<integer>930</integer>
+			<integer>1110</integer>
 		</dict>
 		<key>0B187036-9768-4D10-8F39-88BCAC7B1C39</key>
 		<dict>
@@ -1660,12 +1945,30 @@ A set of Bookends scripts to perform 8 different functions:
 			<key>ypos</key>
 			<integer>640</integer>
 		</dict>
+		<key>189BD0C8-69D6-4DC9-BC21-838C6C75A7DC</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>480</integer>
+			<key>ypos</key>
+			<integer>970</integer>
+		</dict>
 		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
 		<dict>
 			<key>xpos</key>
 			<integer>1250</integer>
 			<key>ypos</key>
 			<integer>360</integer>
+		</dict>
+		<key>19E8EE0F-A73F-443B-964C-262A398C042B</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>750</integer>
 		</dict>
 		<key>1BC27066-8B01-42C8-A6D1-1D44312945D3</key>
 		<dict>
@@ -1793,9 +2096,9 @@ A set of Bookends scripts to perform 8 different functions:
 		<key>5690F7FD-CDD6-4AD6-B082-4C52C84C8847</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>360</integer>
 			<key>ypos</key>
-			<integer>930</integer>
+			<integer>1110</integer>
 		</dict>
 		<key>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</key>
 		<dict>
@@ -1855,6 +2158,24 @@ A set of Bookends scripts to perform 8 different functions:
 			<key>ypos</key>
 			<integer>10</integer>
 		</dict>
+		<key>8AA82958-333B-45F1-A2B3-4FE01ECC5E1D</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>860</integer>
+		</dict>
+		<key>8E609FB8-E51F-4307-BF5F-0E03F3B314CD</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>480</integer>
+			<key>ypos</key>
+			<integer>750</integer>
+		</dict>
 		<key>911559DD-772D-466A-AC11-0B9A9A99B6F8</key>
 		<dict>
 			<key>colorindex</key>
@@ -1902,6 +2223,26 @@ A set of Bookends scripts to perform 8 different functions:
 			<key>ypos</key>
 			<integer>530</integer>
 		</dict>
+		<key>A85CDCE2-7C4E-4C47-A991-CF8BCC436219</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>480</integer>
+			<key>ypos</key>
+			<integer>860</integer>
+		</dict>
+		<key>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>note</key>
+			<string>Enter an title search (case insensitive) and it will return references as a list into the Alfred results dropdown. Press [⌘,⌥]enter and it will copy the temporary citation.</string>
+			<key>xpos</key>
+			<integer>300</integer>
+			<key>ypos</key>
+			<integer>860</integer>
+		</dict>
 		<key>B14F1D3F-1FBF-4B85-87D0-9346F0BA1141</key>
 		<dict>
 			<key>colorindex</key>
@@ -1928,6 +2269,15 @@ A set of Bookends scripts to perform 8 different functions:
 			<integer>740</integer>
 			<key>ypos</key>
 			<integer>10</integer>
+		</dict>
+		<key>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>150</integer>
+			<key>ypos</key>
+			<integer>750</integer>
 		</dict>
 		<key>D5390C3E-D89A-4E54-BFE3-36C24C54DF3E</key>
 		<dict>
@@ -1959,16 +2309,16 @@ A set of Bookends scripts to perform 8 different functions:
 		<key>E50B449E-6EF4-448F-A5B3-152FD1FCAF09</key>
 		<dict>
 			<key>xpos</key>
-			<integer>70</integer>
+			<integer>10</integer>
 			<key>ypos</key>
-			<integer>930</integer>
+			<integer>1110</integer>
 		</dict>
 		<key>E977EE79-677D-4A9A-81F7-2925A1A9B442</key>
 		<dict>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>180</integer>
 			<key>ypos</key>
-			<integer>930</integer>
+			<integer>1110</integer>
 		</dict>
 		<key>EABF7A78-1D69-46C2-84DC-200A4B715A40</key>
 		<dict>
@@ -2018,7 +2368,7 @@ A set of Bookends scripts to perform 8 different functions:
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.0.5</string>
+	<string>1.0.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

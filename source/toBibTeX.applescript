@@ -3,7 +3,6 @@
 Script originally written by Naupaka Zimmerman, modified by iandol
 August 10, 2017
 
-
 MIT License
 
 Copyright (c) 2017 Naupaka Zimmerman
@@ -27,10 +26,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 *)
 
-use AppleScript version "2.4"
-use scripting additions
-
-
 -- Trim whitespace, from http://macscripter.net/viewtopic.php?id=18519
 on trim(someText)
 	repeat until someText does not start with " "
@@ -43,7 +38,6 @@ on trim(someText)
 	
 	return someText
 end trim
-
 
 -- Function to split returned values on a character into an array
 -- and also to parse out only those that match the query string.
@@ -133,7 +127,7 @@ on run argv
 	if myGroupArray is {} then
 		set output to "No groups matched your input..."
 	else
-		display notification "Running BibTeX conversion, please wait…" with title "Bookends to BibTeX exporter V" & myVersion
+		display notification "Running BibTeX conversion, please wait..." with title "Bookends to BibTeX exporter V" & myVersion
 		-- set output string based on parsed input parameters or defaults
 		set AppleScript's text item delimiters to ", "
 		set output to ("Path: " & myPath & " | " & "Groups:" & myGroupArray & "." as string)
@@ -192,7 +186,7 @@ on run argv
 				
 				-- update progress bar        
 				set progress completed steps to thisLoop
-				set progress additional description to "Reference block: " & thisLoop & " completed…"
+				set progress additional description to "Reference block: " & thisLoop & " completed..."
 				
 				-- update the loop number
 				set thisLoop to thisLoop + 1
