@@ -6,9 +6,9 @@ on run argv
 	tell application "Bookends"
 		-- Extract UUID from Bookends
 		set refList to {}
-		if length of query is greater than 2 then --no point in searching for <=2 letter fragments
+		if length of query is greater than 1 then --no point in searching for <=2 letter fragments
 			set AppleScript's text item delimiters to {return}
-			set refList to text items of («event ToySSQLS» "title REGEX '(?i)" & query & "'")
+			set refList to text items of («event ToySSQLS» "title REGEX '(?i)" & query as string & "'")
 			set AppleScript's text item delimiters to {","}
 		end if
 		

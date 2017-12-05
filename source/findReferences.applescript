@@ -3,12 +3,20 @@
 --------------------------------------------------------------------
 on run argv
 	set query to (do shell script "echo " & argv & " | iconv -s -f UTF-8-Mac -t UTF-8") as Unicode text
+	set searchLength to 1
+	if length of query is 1 --check if character is higher unicode character
+		set queryid to id of query
+		if queryid is greater than 1514 -- up to hebrew codepoint
+			set searchLength to 0 -- so we can search for chinese names
+		end if
+	end if
 	tell application "Bookends"
 		-- Extract UUID from Bookends
 		set refList to {}
-		if length of query is greater than 2 then --no point in searching for <=2 letter fragments
+		if length of query is greater than searchLength then --only search for minimum fragment size
 			set AppleScript's text item delimiters to {return}
-			set refList to text items of («event ToySSQLS» "authors REGEX '(?i)" & query & "'")
+			set searchString to "authors REGEX '(?i)" & query as string & "'"
+			set refList to text items of («event ToySSQLS» searchString)
 			set AppleScript's text item delimiters to {","}
 		end if
 		

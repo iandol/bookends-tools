@@ -1892,8 +1892,8 @@ echo "[@$BIBKEY]" | tr -d '\n'</string>
 	<key>readme</key>
 	<string># Changelog
 
+1.0.7 — try to get search for chinese authors to work
 1.0.6 — add betitle that searches within the reference title for a word.
-
 1.0.5 — add ⌥ to bebib to paste pandoc footnote format. bebib formatted ref now pastes in the target app. add environment variable to control the bibliography format for bebib
 
 
@@ -2368,7 +2368,7 @@ A set of Bookends scripts to perform 9 different functions:
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.0.6</string>
+	<string>1.0.7</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>
