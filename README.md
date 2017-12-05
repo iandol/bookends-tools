@@ -6,7 +6,7 @@
 
 ![Workflow screenshot](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/workflow.png)
 
-**key**: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨︎: trigger tool and enter some text`  
+**key**: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨️: trigger tool and enter some text`  
 
 1. **beidsearch** 📄 — Find a selected uniqueID in Bookends. For example, if you have a temporary citation like {Koffka, 1922, #6475} in your word-processor, double-click select the Bookends ID `6475`, then trigger this workflow and it will find the reference in Bookends for you.
 2. **bebrowser** 📄 — Search selected text in Bookends browser. For the Pubmed interface you should select this manually in the bookends browser. Because this uses `System Events`, sometimes the automatic paste into the search field fails, in which case you need to manually press ⌘V and ⌅ (enter) to trigger the search.
@@ -14,9 +14,9 @@
 4. **betoopml** 🗄 — Select multiple references within Bookends, then run this to create an OPML file which you can import into Scrivener or other OPML-aware tool. This will contain the abstract and notes which is very useful for research. It contains links back to the Bookends reference. You can configure the export path in the workflow variables (default Desktop/).
 5.  **bescopus** 🗄 — Select a reference (with a DOI) in Bookends, then trigger this to search Scopus with the DOI.  It will return an inline results list for the Scopus entry AND the Cited-by page. Select an entry to go to that page. It will also append these Scopus URLs in the Notes field for future reference. You can enter your Scopus API key in the workflow variables. ![bescopus](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/5.png)
 6. **betobibtex** ⌨︎ — You enter the name of a Bookends static/smart group name and this will create a BibTeX bibliography file for those particular groups. Very useful for Pandoc and/or LaTeX workflows. You can optionally generate JSON. You can configure the export path in the workflow variables (default Desktop/). ![betobibtex](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/6.png)
-7. **becite** ⌨︎ — You enter an author name, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/7.png)
-8. **bebib** ⌨︎ — You enter an author name, and get an inline results list. You can then paste this as a formatted reference (⌘ pastes MMD style, ⌥ pastes Pandoc style).
-9. **betitle** ⌨︎ — You enter a word in the title, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
+7. **becite** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/7.png)
+8. **bebib** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a formatted reference (⌘ pastes MMD style, ⌥ pastes Pandoc style).
+9. **betitle** ⌨️ — You enter a word in the title, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
 
 ### Workflow variables
 
