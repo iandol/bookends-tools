@@ -15,8 +15,10 @@ on run argv
 		set refList to {}
 		if length of query is greater than searchLength then --only search for minimum fragment size
 			set AppleScript's text item delimiters to {return}
-			set searchString to "authors REGEX '(?i)" & query as string & "'"
+			set searchString to "authors REGEX '(?i)" & query as string & "' OR editors REGEX '(?i)" & query as string & "'"
 			set refList to text items of («event ToySSQLS» searchString)
+			do shell script "echo " & searchString & " >> ~/Desktop/becite.txt"
+			do shell script "echo '" & refList & "' >> ~/Desktop/becite.txt"
 			set AppleScript's text item delimiters to {","}
 		end if
 		
@@ -27,11 +29,25 @@ on run argv
 			
 			-- Extract first Author
 			set refAuthorList to («event ToySRFLD» refItem given string:"authors")
+			if refAuthorList is "" then
+				set refAuthorList to («event ToySRFLD» refItem given string:"editors")
+			end
 			set AppleScript's text item delimiters to {","}
 			set refAuthors to text items of refAuthorList
 			set AppleScript's text item delimiters to {"'"}
 			set refAuthor to first item of refAuthors
 			set AppleScript's text item delimiters to {""}
+			set findChars to {linefeed, return}
+			set replaceChars to {" — ", " — "}
+			repeat with i from 1 to length of findChars
+				if (item i of findChars) is in refAuthor then
+					set AppleScript's text item delimiters to {item i of findChars}
+					set refAuthor to text items of refAuthor
+					set AppleScript's text item delimiters to {item i of replaceChars}
+					set refAuthor to refAuthor as text
+					set AppleScript's text item delimiters to {""}
+				end if
+			end repeat
 			
 			
 			-- Extract and clean (escape " and remove newlines) title for JSON
