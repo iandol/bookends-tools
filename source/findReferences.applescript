@@ -17,8 +17,8 @@ on run argv
 			set AppleScript's text item delimiters to {return}
 			set searchString to "authors REGEX '(?i)" & query as string & "' OR editors REGEX '(?i)" & query as string & "'"
 			set refList to text items of («event ToySSQLS» searchString)
-			do shell script "echo " & searchString & " >> ~/Desktop/becite.txt"
-			do shell script "echo '" & refList & "' >> ~/Desktop/becite.txt"
+			--do shell script "echo " & searchString & " >> ~/Desktop/becite.txt"
+			--do shell script "echo '" & refList & "' >> ~/Desktop/becite.txt"
 			set AppleScript's text item delimiters to {","}
 		end if
 		
