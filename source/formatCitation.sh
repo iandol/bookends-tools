@@ -20,7 +20,7 @@ EOT
 )
 
 URL="\"bookends://sonnysoftware.com/$UUID\""
-LINKT=$(echo $LINKTEXT | iconv --unicode-subst="\u%04X?" -f UTF8 -t ascii)
+LINKT=$(echo $LINKTEXT | iconv --unicode-subst="\'%02X" -f UTF8 -t ascii)
 
 RTF1=$(cat << EOT
 {\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf200
