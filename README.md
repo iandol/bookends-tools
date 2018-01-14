@@ -6,7 +6,7 @@
 
 ![Workflow screenshot](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/workflow.png)
 
-Note: the tools donated with a 📄 use Applescript `System Events` to trigger keyboard bindings and this doesn't always trigger correctly... 
+Note: the tools denoted by 📄 use Applescript `System Events` to trigger keyboard bindings with delays; the delays work fine for me but may need to be adjusted for you.
 
 **key**: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨️: trigger tool and enter some text`  
 
@@ -16,26 +16,27 @@ Note: the tools donated with a 📄 use Applescript `System Events` to trigger k
 4. **bequickadd** 📄 — Take a text selected DOI / PMID / ISBN or JSTOR and use Quick Add (feature added in Bookends 13.0.3+) to quickly add this reference to the database.
 5. **betoopml** 🗄 — Select multiple references within Bookends, then run this to create an OPML file which you can import into Scrivener or other OPML-aware tool. This will contain the abstract and notes which is very useful for research. It contains links back to the Bookends reference. You can configure the export path in the workflow variables (default Desktop/).
 6.  **bescopus** 🗄 — Select a reference (with a DOI) in Bookends, then trigger this to search Scopus with the DOI.  It will return an inline results list for the Scopus entry AND the Cited-by page. Select an entry to go to that page. It will also append these Scopus URLs in the Notes field for future reference. You can enter your Scopus API key in the workflow variables. ![bescopus](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/5.png)
-7. **betobibtex** ⌨️ — You enter the name of a Bookends static/smart group name and this will create a BibTeX bibliography file for those particular groups. Very useful for Pandoc and/or LaTeX workflows. You can optionally generate JSON. You can configure the export path in the workflow variables (default Desktop/). ![betobibtex](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/6.png)
-8. **becite** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/7.png)
-9. **bebib** ⌨️ — You enter an author name, and get an inline results list. You can then paste this as a formatted reference (⌘ pastes MMD style, ⌥ pastes Pandoc style).
-10. **betitle** ⌨️ — You enter a word in the title, and get an inline results list. You can then paste this as a temporary citation (⌘ pastes MMD style, ⌥ pastes Pandoc style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
+7. **betobibtex** ⌨ — You enter the name of a Bookends static/smart group name and this will create a BibTeX bibliography file for those particular groups. Very useful for Pandoc and/or LaTeX workflows. You can optionally generate JSON. You can configure the export path in the workflow variables (default Desktop/). ![betobibtex](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/6.png)
+8. **becite** ⌨ — You enter an author name, and get an inline results list. You can then paste this as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style). For **becite** and **betitle** there is also an workflow environment variable (citeUsesRTF & commentText) to copy the Pandoc/MMD temporary citation using RTF; this puts the link back to bookends into an RTF comment (and/or annotation in Scrivener).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/7.png)
+9. **betitle** ⌨ — You enter a word in the title, and get an inline results list. You can then paste this as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
+10. 9. **bebib** ⌨ — You enter an author name, and get an inline results list. You can then paste this as a **formatted reference** (⌘ pastes Pandoc style, ⌥ pastes MMD style).
 
-### Workflow variables
+## Workflow variables
 
 ![variables](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/variables.png)  
 
-There are several workflow variables which let you modify some of the functionality: 
+There are several workflow variables which let you modify the functionality of the tools: 
 
-* `appendScopusNotes` allows you to toggle the behaviour whereby the Scopus URLs are appended back to the Bookends reference note stream. 
-* `BibTeXtoJSON` allows you to convert the BIB file to a JSON file, which at least for Pandoc-citeproc is much faster (~3X) to then process for the bibliography. 
-* `protectBibTitles` makes titles in the BIB file {{ wrapped }} so the case is not changed in subsequent processing.
-* `citationStyle` is the Bookends bibliographic style used by `bebib` when outputting the formatted reference.
-* `exportPath` used by `betoopml` and `betobibtex`
-* `scopusKey` your personal Scopus API key
+* `appendScopusNotes` (default = TRUE): allows you to toggle the behaviour whereby the Scopus URLs are appended back to the Bookends reference note stream. 
+* `BibTeXtoJSON` (default = FALSE): allows you to convert the BIB file to a JSON file, which at least for Pandoc-citeproc is much faster (~3X) to then process for the bibliography. 
+* `citeUsesRTF`  (default = FALSE) & `commentText`: for the `becite` and `betitle` tools for Pandoc/MMD temporary citations, if you enable this then the temp citation is copied as RTF with a comment-enclosed link back to Bookends. In Scrivener if you enable **Preferences▸Sharing▸Import comments as inline annotations**, then the comment becomes an inline annotation. `commentText` is the text that is linked back to Bookends (default is @).
+* `protectBibTitles`  (default = FALSE): makes titles in the BIB file {{ wrapped }} so the case is not changed in subsequent processing.
+* `citationStyle`  (default = APA 6th Edition): is the Bookends bibliographic style used by `bebib` when outputting the formatted reference.
+* `exportPath`  (default = Desktop): used by `betoopml` and `betobibtex`
+* `scopusKey`: your personal Scopus API key
 
 ### Scopus Info
-For the Scopus search tool, ideally [you should register for your own Scopus API key](https://dev.elsevier.com/) (without it it will use the demo key which may or may not work) and enter it in the workflow variables. The Scopus URLs also benefit from an institutional subscription, otherwise you will see a preview (which still contains useful information). 
+For the Scopus search tool, ideally [you should register for your own Scopus API key](https://dev.elsevier.com/) (without it it will use the demo key which may or may not work) and enter it in the workflow variables. The Scopus URLs also benefit from an institutional subscription, otherwise you will see a Scopus preview (which still contains useful information). 
 
 ## Sources
 Several of these very useful tools have been modified from the following sources:
