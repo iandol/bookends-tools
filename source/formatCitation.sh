@@ -7,7 +7,7 @@
 UUID=$1
 USERTF=$citeUsesRTF
 LINKTEXT=$commentText
-USEANNOTATION=0 #$scrivenerUsesAnnotation
+USEANNOTATION='false' # will use $scrivenerUsesAnnotation, but this is still WIP
 
 CITEMARKER='@'
 [[ $usePandocFormat -lt 1 ]] && CITEMARKER='#'
