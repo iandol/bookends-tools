@@ -1,5 +1,6 @@
+#!/usr/bin/osascript
 --------------------------------------------------------------------
--- SCRIPT FOR EXTRACTING REFERENCES FROM BOOKENDS
+-- Triggers an SQL Search to Find References and Formats as JSON
 --------------------------------------------------------------------
 on run argv
 	set query to (do shell script "echo " & argv & " | iconv -s -f UTF-8-Mac -t UTF-8") as Unicode text
@@ -37,32 +38,11 @@ on run argv
 			set AppleScript's text item delimiters to {"'"}
 			set refAuthor to first item of refAuthors
 			set AppleScript's text item delimiters to {""}
-			set findChars to {linefeed, return}
-			set replaceChars to {" — ", " — "}
-			repeat with i from 1 to length of findChars
-				if (item i of findChars) is in refAuthor then
-					set AppleScript's text item delimiters to {item i of findChars}
-					set refAuthor to text items of refAuthor
-					set AppleScript's text item delimiters to {item i of replaceChars}
-					set refAuthor to refAuthor as text
-					set AppleScript's text item delimiters to {""}
-				end if
-			end repeat
+			set refAuthor to my fixString(refAuthor)
 			
-			
-			-- Extract and clean (escape " and remove newlines) title for JSON
+			-- Extract title
 			set refTitle to («event ToySRFLD» refItem given string:"title")
-			set findChars to {linefeed, return, tab, "\""}
-			set replaceChars to {" ", " ", " ", "\\\""}
-			repeat with i from 1 to length of findChars
-				if (item i of findChars) is in refTitle then
-					set AppleScript's text item delimiters to {item i of findChars}
-					set refTitle to text items of refTitle
-					set AppleScript's text item delimiters to {item i of replaceChars}
-					set refTitle to refTitle as text
-					set AppleScript's text item delimiters to {""}
-				end if
-			end repeat
+			set refTitle to my fixString(refTitle)
 			
 			-- Extract date
 			set refDateRaw to («event ToySRFLD» refItem given string:"thedate")
@@ -70,13 +50,14 @@ on run argv
 			--set cmd to "ruby -e 'puts $1 if \"" & refDateRaw & "\" =~ /([12][0-9]{3})/'"
 			set cmd to "echo '" & refDateRaw & "' | sed 's/\\([0-9]*\\)\\(.*\\)/\\1/g'"
 			set refDate to (do shell script cmd)
+			set refDate to my fixString(refDate)
 			
 			-- json formatting
 			-- Set json header
 			set json to json & linefeed & "{" & linefeed
 			set json to json & tab & "\"uid\": \"" & refItem & "\"," & linefeed
 			set json to json & tab & "\"arg\": \"" & refItem & "\"," & linefeed
-			set json to json & tab & "\"title\": \"" & refAuthor & " " & refDate & "\"," & linefeed
+			set json to json & tab & "\"title\": \"" & refAuthor & " - " & refDate & "\"," & linefeed
 			set json to json & tab & "\"subtitle\": \"" & refTitle & "\"," & linefeed
 			set json to json & tab & "\"icon\": {\"path\": \"file.png\"}" & linefeed
 			set json to json & "}," & linefeed
@@ -87,3 +68,18 @@ on run argv
 		
 	end tell
 end run
+
+on fixString(theText)
+	set findChars to {linefeed, return, tab, "\""}
+	set replaceChars to {" ", " ", " ", "\\\""}
+	repeat with i from 1 to length of findChars
+		if (item i of findChars) is in theText then
+		set AppleScript's text item delimiters to {item i of findChars}
+			set theText to text items of theText
+			set AppleScript's text item delimiters to {item i of replaceChars}
+			set theText to theText as text
+			set AppleScript's text item delimiters to {""}
+		end if
+	end repeat
+	return theText
+end fixString

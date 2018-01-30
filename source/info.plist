@@ -1861,7 +1861,8 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
-1.1.0 — option to use RTF for becite/betitle temporary citations to enable bookends links copied to RTF comments/annotation aware apps like Scrivener. Added Workflow env variables citeUsesRTF to enable/disable this feature.
+1.1.1 — becite handles newlines in dates better...
+1.1.0 — option to use RTF for becite/betitle temporary citations to enable bookends links copied to RTF comments/annotation aware apps like Scrivener. Added Workflow env variables citeUsesRTF to enable/disable this feature. Note it cannot match your font on paste of RTF...
 1.0.9 - add quick add tool that allows you to select a DOI/PMID/ISBN/JSTOR in any app and use the new quick add tool in BE &gt;13.0.3
 1.0.8 — allow author or editor search for becite, better chinese fix
 1.0.7 — try to get search for chinese authors to work
@@ -2328,7 +2329,7 @@ A set of Bookends scripts to perform 9 different functions:
 		<key>citationStyle</key>
 		<string>APA 6th Edition</string>
 		<key>citeUsesRTF</key>
-		<string>true</string>
+		<string>false</string>
 		<key>commentText</key>
 		<string>@</string>
 		<key>exportPath</key>
@@ -2343,7 +2344,7 @@ A set of Bookends scripts to perform 9 different functions:
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>
