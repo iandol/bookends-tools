@@ -8,7 +8,7 @@ require 'optparse' # ruby standard option parser
 #--------------------------------class definitiom
 class ScopusSearch
 	attr_accessor :options, :version, :using_alfred
-	VER = '1.0.7'.freeze
+	VER = '1.0.8'.freeze
 	OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs, :append)
 	
 	#--------------------- constructor
@@ -125,21 +125,24 @@ class ScopusSearch
 
 	def returnResults
 		if @using_alfred
-			jsono = "{\"items\": [    \n{\n"
-			jsono += "\t\"uid\": \"" + @uuid + "B\",\n"
-			jsono += "\t\"arg\": \"" + @scite + "\",\n"
-			jsono += "\t\"title\": \"CITING: " + @title + "\",\n"
-			jsono += "\t\"subtitle\": \"Open URL for papers that cite this paper...\"\n"
-			unless @surl.empty?
-				jsono += "},\n"
-				jsono += "{\n"
-				jsono += "\t\"uid\": \"" + @uuid + "A\",\n"
-				jsono += "\t\"arg\": \"" + @surl + "\",\n"
-				jsono += "\t\"title\": \"" + @title + "\",\n"
-				jsono += "\t\"subtitle\": \"Open URL to the reference...\"\n"
+			jsonc = {
+				uid: @uuid + "B", 
+				arg: @scite, 
+				title: "CITING: " + @title, 
+				subtitle: "Open URL for papers that cite this paper..."
+			}
+			if @surl.empty?
+				jsono = { items: [jsonc]}
+			else
+				jsons = {  
+					uid: @uuid + "A", 
+					arg: @surl, 
+					title: @title, 
+					subtitle: "Open URL to the reference..."
+				}
+				jsono = { items: [jsonc, jsons]}
 			end
-			jsono += "}\n]}"
-			puts jsono
+			puts JSON.pretty_generate(jsono)
 		else
 			puts 'SCOPUS CITED: ' + @scite + "\nSCOPUS ENTRY: " + @surl
 		end
@@ -147,13 +150,9 @@ class ScopusSearch
 
 	def returnNoDOI(response)
 		if @using_alfred
-			jsono = "{\"items\": [    \n{\n"
-			jsono += "\t\"uid\": \"" + 'error' + "\",\n"
-			jsono += "\t\"arg\": \"" + ' ' + "\",\n"
-			jsono += "\t\"title\": \"No DOI was specified!\",\n"
-			jsono += "\t\"subtitle\": \"" + @options.uuid + ': ' + response + "\"\n"
-			jsono += "}\n\n]}"
-			puts jsono
+			jsono = { items: [{  uid: 'error', arg: ' ', title: "No DOI was specified!", 
+				subtitle: @options.uuid + ":" + response }] }
+			puts JSON.pretty_generate(jsono)
 		else
 			puts 'No DOI was specified or found: ' + @options.uuid + ' - ' + response
 		end
@@ -161,13 +160,9 @@ class ScopusSearch
 
 	def returnNullResults(response)
 		if @using_alfred
-			jsono = "{\"items\": [    \n{\n"
-			jsono += "\t\"uid\": \"" + 'error' + "\",\n"
-			jsono += "\t\"arg\": \"" + ' ' + "\",\n"
-			jsono += "\t\"title\": \"Sorry, no entry in Scopus was found\",\n"
-			jsono += "\t\"subtitle\": \"" + @options.doi + ': ' + response + "\"\n"
-			jsono += "}\n\n]}"
-			puts jsono
+			jsono = { items: [{  uid: 'error', arg: ' ', title: "Sorry, no entry in Scopus was found", 
+				subtitle: @options.doi + ":" + response }] }
+			puts JSON.pretty_generate(jsono)
 		else
 			puts 'No results found for: ' + @options.doi + ' - ' + response
 		end
