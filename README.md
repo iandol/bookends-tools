@@ -6,7 +6,7 @@
 
 ![Workflow screenshot](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/workflow.png)
 
-Note: the tools denoted by 📄 use Applescript `System Events` to trigger keyboard bindings with delays; the delays work fine for me but may need to be adjusted for you.
+Note: the tools denoted by 📄 use Applescript `System Events` to trigger keyboard bindings with delays; the delays work fine for me but may need to be adjusted for you. If the tools seems to not work try to manually type ⌘V and enter.
 
 **key**: `📄: select some text in another app then trigger tool` — `🗄: select reference(s) within Bookends then trigger tool` — `⌨️: trigger tool and enter some text`  
 
@@ -17,8 +17,8 @@ Note: the tools denoted by 📄 use Applescript `System Events` to trigger keybo
 5. **betoopml** 🗄 — Select multiple references within Bookends, then run this to create an OPML file which you can import into Scrivener or other OPML-aware tool. This will contain the abstract and notes which is very useful for research. It contains links back to the Bookends reference. You can configure the export path in the workflow variables (default Desktop/).
 6.  **bescopus** 🗄 — Select a reference (with a DOI) in Bookends, then trigger this to search Scopus with the DOI.  It will return an inline results list for the Scopus entry AND the Cited-by page. Select an entry to go to that page. It will also append these Scopus URLs in the Notes field for future reference. You can enter your Scopus API key in the workflow variables. ![bescopus](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/bescopus.png)
 7. **betobibtex** ⌨ — You enter the name of a Bookends static/smart group name and this will create a BibTeX bibliography file for those particular groups. Very useful for Pandoc and/or LaTeX workflows. You can optionally generate JSON. You can configure the export path in the workflow variables (default Desktop/). ![betobibtex](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betobibtex.png)
-8. **becite** ⌨ — You enter one or more author/editor names and an optional year, and get an inline results list. You can then paste the selected ref as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style). For **becite** and **betitle** there is also a workflow environment variable (citeUsesRTF & commentText) to copy the Pandoc/MMD temporary citation using RTF; this puts the link back to bookends into an RTF comment (and/or annotation in Scrivener).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/becite.png)
-9. **betitle** ⌨ — You enter a word in the title, and get an inline results list. You can then paste this as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
+8. **becite** ⌨ — You enter one or more author/editor names and an optional year, and get an inline results list (for example [friston hobson 2014]). You can then paste the selected ref as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style). For **becite** and **betitle** there is also a workflow environment variable (citeUsesRTF & commentText) to copy the Pandoc/MMD temporary citation using RTF; this puts the link back to bookends into an RTF comment (and/or annotation in Scrivener).  ![becite](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/becite.png)
+9. **betitle** ⌨ — You enter one or more words contained in the title or keywords and an optional year, and get an inline results list. You can then paste this as a **temporary citation** (⌘ pastes Pandoc style, ⌥ pastes MMD style).  ![betitle](https://raw.githubusercontent.com/iandol/bookends-tools/master/images/betitle.png)
 10. 9. **bebib** ⌨ — You enter one or more author/editor names and an optional year, and get an inline results list.  You can then paste the selected ref as a **formatted reference** (⌘ pastes Pandoc style, ⌥ pastes MMD style).
 
 ## Workflow variables
@@ -48,7 +48,7 @@ Thanks to Dave Glogowski (dave83); [Bookends forum thread](https://www.sonnysoft
 Thanks and MIT copyright to Naupaka Zimmerman; [Bookends forum thread](https://www.sonnysoftware.com/phpBB3/viewtopic.php?f=6&t=4246) | [Original Gist](https://gist.github.com/naupaka/3637da8f1449a279a79e643575a7c2e1)
 
 ### becite & bebib
-Thanks to kseggleton; [Bookends forum thread](https://www.sonnysoftware.com/phpBB3/viewtopic.php?f=6&t=4051)
+Thanks to kseggleton for the original applescript version; [Bookends forum thread](https://www.sonnysoftware.com/phpBB3/viewtopic.php?f=6&t=4051)
 
 ### OneUpdater
 Thanks to Vitor for his excellent update system for Alfred workflows: [OneUpdater](https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater)
