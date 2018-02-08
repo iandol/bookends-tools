@@ -1,3 +1,4 @@
+#!/usr/bin/env osascript -l JavaScript
 function run(argv) {
   //debugger //trigger the debugger, requires Safari to be open
   ObjC.import('stdlib')

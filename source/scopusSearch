@@ -148,10 +148,10 @@ class ScopusSearch
 		end
 	end
 
-	def returnNoDOI(response)
+	def returnNoDOI()
 		if @using_alfred
-			jsono = { items: [{  uid: 'error', arg: ' ', title: "No DOI was specified!", 
-				subtitle: @options.uuid + ":" + response }] }
+			jsono = { items: [{  uid: 'error', arg: '', title: 'No DOI was found!', 
+				subtitle: 'Unique ID => ' + @options.uuid }] }
 			puts JSON.pretty_generate(jsono)
 		else
 			puts 'No DOI was specified or found: ' + @options.uuid + ' - ' + response
@@ -160,11 +160,11 @@ class ScopusSearch
 
 	def returnNullResults(response)
 		if @using_alfred
-			jsono = { items: [{  uid: 'error', arg: ' ', title: "Sorry, no entry in Scopus was found", 
-				subtitle: @options.doi + ":" + response }] }
+			jsono = { items: [{  uid: 'error', arg: '', title: 'Sorry, no entry in Scopus was found', 
+				subtitle: @options.doi + " => " + response }] }
 			puts JSON.pretty_generate(jsono)
 		else
-			puts 'No results found for: ' + @options.doi + ' - ' + response
+			puts 'No results found for: ' + @options.doi + ' => ' + response
 		end
 	end
 
@@ -211,12 +211,9 @@ end #--------------- end ScopusSearch class
 #-------------------------------------------------
 ss = ScopusSearch.new
 ss.parseInputs(ARGV)
-
+require 'byebug';byebug
 # check if running under alfred
-is_alfred = ENV['alfred_version']
-unless is_alfred.nil?
-	ss.using_alfred = true unless is_alfred.empty?
-end
+ss.using_alfred = true unless ENV['alfred_version'].nil?
 
 # check ENV for scopusKey, overrides default/ARGV
 key = ENV['scopusKey']
@@ -231,22 +228,18 @@ end
 
 # if no DOI try to get our DOI directly from the selected ref in Bookends
 if ss.options.doi.empty?
-	uuid = ss.osascript <<-EOT
+	results = ss.osascript <<-EOT
 	tell application "Bookends"
-		set selected_id to «event ToySRUID» "Selection"
-		return selected_id
+		set mynull to ASCII character 30
+		set sid to «event ToySRUID» "Selection"
+		set doi to «event ToySRFLD» sid given string:"user17"
+		return sid & mynull & doi
 	end tell
 	EOT
-	uuid.chomp!.strip!
-	ss.options.uuid = uuid
-	doi = ss.osascript <<-EOT
-	tell application "Bookends"
-		set doi to «event ToySRFLD» #{uuid} given string:"user17"
-		return doi
-	end tell
-	EOT
+	results = results.split("\u001E")
+	ss.options.uuid = results[0].chomp.strip
+	doi = results[1].chomp.strip
 	doi = '' if doi.nil?
-	doi.chomp!.strip!
 	ss.options.doi = doi
 end
 

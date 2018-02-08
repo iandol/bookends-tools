@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferencesTitle
 	attr_accessor :version, :using_alfred
-	VER = '1.0.3'.freeze
+	VER = '1.0.4'.freeze
 	
 	#--------------------- constructor
 	def initialize # set up class
@@ -63,15 +63,15 @@ class FindReferencesTitle
 		return unless @cansearch
 		return if @list.empty?
 		mylist = @list.join(",")
-		myorder = ['title','authors','date','myid']
+		myorder = ['title','authors','date','uniqueid']
 		rec = osascript <<-EOT
 		tell application "Bookends"
 			set mynull to ASCII character 30
 			set ti to «event RubyRFLD» "#{mylist}" given string:"title"
 			set au to «event RubyRFLD» "#{mylist}" given string:"authors"
 			set da to «event RubyRFLD» "#{mylist}" given string:"thedate"
-			set myid to «event RubyRFLD» "#{mylist}" given string:"uniqueID"
-			return ti & mynull & au & mynull & da & mynull & myid
+			set uid to «event RubyRFLD» "#{mylist}" given string:"uniqueID"
+			return ti & mynull & au & mynull & da & mynull & uid
 		end tell
 		EOT
 		rec = rec.split("\u001E")
@@ -93,10 +93,10 @@ class FindReferencesTitle
 					da = 'Unknown' if da.to_s.empty?
 					@date[j] = da.chomp.strip.split(/[\s\/-]/)[0]
 				end
-			when 'myid'
-				thisrec.each_with_index do |myid, j|
-					myid = '0' if myid.to_s.empty?
-					@uuid[j] = myid.chomp.strip
+			when 'uniqueid'
+				thisrec.each_with_index do |uid, j|
+					uid = '0' if uid.to_s.empty?
+					@uuid[j] = uid.chomp.strip
 				end
 			end		
 		end
@@ -117,24 +117,32 @@ class FindReferencesTitle
 					icon: {path: "file.png"}
 				}
 			end
-			jsono= { comment: "RAW=#{@raw} | NAMES=#{@names} | YEAR=#{@year} | SQL=#{@SQL}",
+			jsono= { comment: "NAMES=#{@names.join(' & ')} | YEAR=#{@year} | SQL=#{@SQL}",
 				items: jsonin,
 				length: jsonin.length }
-			puts JSON.pretty_generate(jsono)
+			puts JSON.generate(jsono)
 		else
-			puts "UUIDS: #{uuid.join(',')}"
+			uuids = @uuid.join(',')
+			puts "UUIDS: #{uuids}"
 		end
 	end
 
 	def returnNullResults
 		if @using_alfred
-			jsono = { comment: "Null Results", 
+			jsono = { comment: "No Results!", 
 			items: [ ],
 			length: 0 }
-			puts JSON.pretty_generate(jsono)
+			puts JSON.generate(jsono)
 		else
 			puts 'No results found!'
 		end
+	end
+
+	def doSearch
+		self.constructSQL
+		self.doSQLSearch
+		self.getRecords
+		self.returnResults
 	end
 
 	# this converts to -e line format so osascript can run, pass in a heredoc
@@ -155,8 +163,5 @@ if ARGV.nil?
 	fR.returnNullResults
 else
 	fR.parseSearch(ARGV)
-	fR.constructSQL
-	fR.doSQLSearch
-	fR.getRecords
-	fR.returnResults
+	fR.doSearch
 end

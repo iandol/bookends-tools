@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'json'
 #======class definition======
-class FindReferences
+class FindReferencesAll
 	attr_accessor :version, :using_alfred
 	VER = '1.0.4'.freeze
 	
@@ -39,9 +39,9 @@ class FindReferences
 		return unless @cansearch
 		@names.each do |name|
 			if @SQL.empty?
-				@SQL = "(authors REGEX '(?i)#{name}' OR editors REGEX '(?i)#{name}')"
+				@SQL = "allFields REGEX '(?i)#{name}'"
 			else
-				@SQL += " AND (authors REGEX '(?i)#{name}' OR editors REGEX '(?i)#{name}')"
+				@SQL += " AND allFields REGEX '(?i)#{name}'"
 			end
 		end
 		unless @year.empty?
@@ -154,7 +154,7 @@ class FindReferences
 end #====== end Class ======
 
 #=== Create object and run it ===
-fR = FindReferences.new
+fR = FindReferencesAll.new
 
 # check if running under alfred
 fR.using_alfred = true unless ENV['alfred_version'].nil?
