@@ -1,5 +1,5 @@
 #!/usr/bin/osascript
---Script to Export Bookends Notes to OPML file v1.17
+--Script to Export Bookends Notes to OPML file v1.18
 --Written by Dave Glogowski (modified by iandol)
 --07 August 2017
 --
@@ -19,7 +19,7 @@
 
 on run argv
 	--Version------------------------------------------------------------------------
-	set myVersion to 1.17
+	set myVersion to 1.18
 
 	--Start Time----------------------------------------------------------------------
 	set originalT to (time of (current date))
@@ -63,7 +63,7 @@ on run argv
 	set opml_version to "<opml version=\"1.0\">" & return
 	set opml_close to "</opml>" & return
 	set opml_header to tab & "<head>" & return
-	set opml_title to tab & tab & "<title>Bookends to Scrivener OPML File</title>" & return
+	set opml_title to tab & tab & "<title>Bookends References Export</title>" & return
 	set opml_date to tab & tab & "<dateCreated>" & (current date) & "</dateCreated>" & return
 	set opml_header_close to tab & "</head>" & return
 	set opml_body to tab & "<body>" & return
@@ -99,7 +99,7 @@ on run argv
 			display dialog "No Boookends References were selected." & return & return & "Please select 1 or more references and restart"
 			return false
 		end if
-		
+
 		--Write OPML Version, Headers, and Open Body statements to File---------------
 		my write_to_file(xml_version, myFile, false)
 		my write_to_file(opml_version, myFile, true)
@@ -108,24 +108,24 @@ on run argv
 		my write_to_file(opml_date, myFile, true)
 		my write_to_file(opml_header_close, myFile, true)
 		my write_to_file(opml_body, myFile, true)
-		
+
 		set selected_ids to words of selected_ids
-		
+
 		--Process Handiling For Each Reference------------------------------------------
 		--get citation, quotes, comments, and tags for of the selected references
 		repeat with i from 1 to length of selected_ids
-			
+
 			--set variables and counters
 			set ref_id to item i of selected_ids
 			set ref_nbr to ref_id
 			set nbr_references to nbr_references + 1
-			
+
 			--FOR EACH REFERENCE BUILD THE TOP LEVEL OPML OUTLINE 
-			
+
 			--Reference Author or Editor      
 			set ref_author to «event ToySRFLD» ref_id given string:"authors"
 			if ref_author is "" then set ref_author to «event ToySRFLD» ref_id given string:"editors"
-			
+
 			if ref_author is "" then
 				set ref_title to "No Authors or Editors"
 			else
@@ -148,7 +148,7 @@ on run argv
 				set ref_author to my replace_bad_characters(ref_author)
 			end if
 			set AppleScript's text item delimiters to tid
-			
+
 			--Reference Year      
 			set ref_date to «event ToySRFLD» ref_id given string:"thedate"
 			if ref_date is "" then
@@ -240,12 +240,12 @@ on run argv
 				if cite_key is not "" then set ref_text to ref_text & "Cite: " & cite_key & "&#10;" & return as text
 			end if
 			set ref_text to ref_text & "---------------------------&#10;" & return & ref_abstract & "&#10;" & return as text
-			if ref_url is not "" then set ref_text to ref_text & "URL: " & my encodeURL(ref_url) & "&#10;" & return as text
-			if ref_doi is not "" then set ref_text to ref_text & "DOI: " & my encodeURL(ref_doi) & "&#10;" & return as text
+			if ref_url is not "" then set ref_text to ref_text & "URL: &lt;" & my encodeURL(ref_url) & "&gt;&#10;" & return as text
+			if ref_doi is not "" then set ref_text to ref_text & "DOI: &lt;" & my encodeURL(ref_doi) & "&gt;&#10;" & return as text
 			if ref_pmid is not "" then set ref_text to ref_text & "PMID: " & ref_pmid & "&#10;" & return as text
 			if ref_att is not "" then set ref_text to ref_text & "Attachments: " & my replace_bad_characters(ref_att) & "&#10;" & return as text
 			if ref_type is not "" then set ref_text to ref_text & "Type: " & ref_type & "&#10;" & return as text
-			set ref_text to ref_text & "Backlink: bookends://sonnysoftware.com/" & ref_nbr & "\">" & return as text
+			set ref_text to ref_text & "Backlink: &lt;bookends://sonnysoftware.com/" & ref_nbr & "&gt;\">" & return as text
 			
 			my write_to_file(ref_text, myFile, true)
 			
@@ -411,17 +411,17 @@ on run argv
 			my write_to_file(opml_outline_close, myFile, true)
 		end repeat
 	end tell
-
+	
 	my write_to_file(opml_body_close, myFile, true)
 	my write_to_file(opml_close, myFile, true)
-
+	
 	set newT to (time of (current date))
 	set diffT to newT - originalT
-
+	
 	display notification "Complete" & return & return & "Exported " & nbr_references & " References and " & nbr_notes & " Notes in " & diffT & " seconds" with title "Bookends to OPML exporter V" & myVersion
 	return true
-
-end run--end of script **************************************************
+	
+end run --end of script **************************************************
 
 --subroutine area ************************************************
 --write_to_this_file subroutine

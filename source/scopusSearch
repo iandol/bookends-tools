@@ -8,7 +8,7 @@ require 'optparse' # ruby standard option parser
 #--------------------------------class definitiom
 class ScopusSearch
 	attr_accessor :options, :version, :using_alfred
-	VER = '1.0.8'.freeze
+	VER = '1.0.9'.freeze
 	OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs, :append)
 	
 	#--------------------- constructor
@@ -58,9 +58,10 @@ class ScopusSearch
 
 	def run
 		returnNullResults('Incomplete input options...') if options.doi.nil? || options.key.nil?
-		url = 'http://api.elsevier.com/content/search/' + options.source
+		url = 'https://api.elsevier.com/content/search/' + options.source
 		url += '?query=DOI%28' + CGI.escape(@options.doi) + '%29'
 		url += '&apiKey=' + @options.key
+		url += '&httpAccept=application%2Fjson'
 		uri = URI(url)
 		begin
 			response = Net::HTTP.get(uri)
@@ -211,7 +212,7 @@ end #--------------- end ScopusSearch class
 #-------------------------------------------------
 ss = ScopusSearch.new
 ss.parseInputs(ARGV)
-require 'byebug';byebug
+
 # check if running under alfred
 ss.using_alfred = true unless ENV['alfred_version'].nil?
 
