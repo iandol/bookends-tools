@@ -2227,6 +2227,7 @@ end run</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
+1.2.4 — becite/betitle/beall now show if a reference has an attachment, and for BE13 users use the new applescript events that are slightly more efficienct.
 1.2.3 — small change to open the attachment when you use becite with [fn].
 1.2.2 — update the Scopus search tool to the newest API changes (https by default and httpAccept is required)
 1.2.1 — rewrote the becite, bebib and betitle tools to perform a mutliple item search (i.e author1 + author2) and you can add an optional YEAR to refine the search. So for example [Zipser Lamme 1998] searches for references by authors (or editors) Zipser and Lamme published in 1998. Also optimised the search code (rewritten in Ruby) so now it takes much less time for large results sets. Add a new [beall] tool to search in all fields. For becite/betitle/beall you can now use SHIFT to open ref directly in Bookends.
@@ -2775,7 +2776,7 @@ A set of Bookends scripts to perform 9 different functions:
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.2.3</string>
+	<string>1.2.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

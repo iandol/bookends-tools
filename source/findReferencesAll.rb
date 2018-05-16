@@ -1,10 +1,14 @@
 #!/usr/bin/env ruby
 require 'json'
+#require 'byebug/core'
+#require 'byebug'
+#PORT = 8989
+#Byebug.wait_connection = true
+#Byebug.start_server('127.0.0.1', PORT)
 #======class definition======
 class FindReferencesAll
 	attr_accessor :version, :using_alfred
-	VER = '1.0.4'.freeze
-	
+	VER = '1.0.5'.freeze
 	#--------------------- constructor
 	def initialize # set up class
 		@version = VER
@@ -20,6 +24,9 @@ class FindReferencesAll
 		@title = []
 		@date = []
 		@uuid = []
+		@attachments = []
+		@key = []
+		@BEVersion = 12
 	end
 
 	def parseSearch(input)
@@ -39,9 +46,9 @@ class FindReferencesAll
 		return unless @cansearch
 		@names.each do |name|
 			if @SQL.empty?
-				@SQL = "allFields REGEX '(?i)#{name}'"
+				@SQL = "(allFields REGEX '(?i)#{name}')"
 			else
-				@SQL += " AND allFields REGEX '(?i)#{name}'"
+				@SQL += " AND (allFields REGEX '(?i)#{name}')"
 			end
 		end
 		unless @year.empty?
@@ -51,15 +58,54 @@ class FindReferencesAll
 
 	def doSQLSearch()
 		return unless @cansearch
-		list = osascript <<-EOT
+		rec = osascript <<-EOT
 		tell application "Bookends"
-			return «event RubySQLS» "#{@SQL}"
+			set mynull to ASCII character 30
+			set results to «event RubySQLS» "#{@SQL}"
+			set BEversion to "12"
+			try
+				set BEversion to «event RubyVERS»
+			end try
+			return results & mynull & BEversion
 		end tell
 		EOT
-		@list = list.chomp.split("\r")
+		rec = rec.split("\u001E")
+		@list = rec[0].chomp.split("\r")
+		@BEVersion = 13 if rec[1].match(/^13/)
 	end
 
 	def getRecords()
+		return unless @cansearch
+		return if @list.empty?
+		mylist = @list.join(",")
+		rec = osascript <<-EOT
+		tell application "Bookends"
+			return «event RubyRJSN» "#{mylist}" given string:"title,authors,thedate,attachments,user1"
+		end tell
+		EOT
+		rec = JSON.parse(rec)
+		rec.each_with_index do |thisrec, i|
+			@title[i] = thisrec['title'].chomp.strip
+			@title[i] = 'Blank' if @title[i].nil? || @title[i].empty?
+
+			@authors[i] = thisrec['authors'].chomp.strip.split(',')[0]
+			@authors[i] = 'Unknown' if @authors[i].nil? || @authors[i].empty?
+
+			@date[i] = thisrec['thedate'].chomp.strip.split(/[\s\/-]/)[0]
+			@date[i] = '????' if @date[i].nil? || @date[i].empty?
+
+			@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
+			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
+
+			@attachments[i] = thisrec['attachments'].to_s.chomp.strip
+			@attachments[i] = '📎' unless @attachments[i].empty?
+
+			@key[i] = thisrec['user1'].to_s.chomp.strip
+			@key[i] = '' if @uuid[i].nil? || @uuid[i].empty?
+		end
+	end
+
+	def getRecordsLegacy()
 		return unless @cansearch
 		return if @list.empty?
 		mylist = @list.join(",")
@@ -82,6 +128,8 @@ class FindReferencesAll
 				thisrec.each_with_index do |ti, j|
 					ti = 'Unknown' if ti.to_s.empty?
 					@title[j] = ti.chomp.strip
+					@attachments[j] = ''
+					@key[j] = ''
 				end
 			when 'authors'
 				thisrec.each_with_index do |au, j|
@@ -104,27 +152,24 @@ class FindReferencesAll
 
 	def returnResults
 		if @uuid.empty?
-			returnNullResults;return
+			returnNullResults; return
 		end
-		if @using_alfred
-			jsonin = []
-			@uuid.each_with_index do |uuid, i|
-				jsonin[i] = {
-					uid: uuid,
-					arg: uuid,
-					title: @authors[i] + ' ' + @date[i],
-					subtitle: @title[i],
-					icon: {path: "file.png"}
-				}
-			end
-			jsono= { comment: "NAMES=#{@names.join(' & ')} | YEAR=#{@year} | SQL=#{@SQL}",
-				items: jsonin,
-				length: jsonin.length }
-			puts JSON.generate(jsono)
-		else
-			uuids = @uuid.join(',')
-			puts "UUIDS: #{uuids}"
+		jsonin = []
+		@uuid.each_with_index do |uuid, i|
+			icon = 'file.png'
+			#icon = 'file+attachment.png' unless @attachments[i].empty?
+			jsonin[i] = {
+				uid: uuid,
+				arg: uuid,
+				title: @authors[i] + ' ' + @date[i] + '   ' + @attachments[i],
+				subtitle: @title[i],
+				icon: {path: "#{icon}"}
+			}
 		end
+		jsono= { comment: "NAMES=#{@names.join(' & ')} | YEAR=#{@year} | SQL=#{@SQL}",
+			items: jsonin,
+			length: jsonin.length }
+		puts JSON.generate(jsono)
 	end
 
 	def returnNullResults
@@ -141,7 +186,11 @@ class FindReferencesAll
 	def doSearch
 		self.constructSQL
 		self.doSQLSearch
-		self.getRecords
+		if @BEVersion == 13
+			self.getRecords
+		else
+			self.getRecordsLegacy
+		end
 		self.returnResults
 	end
 
