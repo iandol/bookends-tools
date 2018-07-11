@@ -2227,6 +2227,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
+1.2.6 - betitle and beall broke in the last commit, fix them here...
 1.2.5 — becite/betitle/beall first AND last author names with initials are now shown, and if an attachment is present you can Quicklook it directly from Alfred without losing focus (press shift or ⌘Y)!
 1.2.4 — becite/betitle/beall now show if a reference has an attachment, and for BE13 users use the new applescript events that are slightly more efficienct.
 1.2.3 — small change to open the attachment when you use becite with [fn].
@@ -2782,7 +2783,7 @@ A set of Bookends scripts to perform 11 different functions:
 		<string>scopusKey</string>
 	</array>
 	<key>version</key>
-	<string>1.2.5</string>
+	<string>1.2.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

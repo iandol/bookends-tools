@@ -116,7 +116,7 @@ on run argv
 	
 	tell application "Bookends"
 		-- get a list of all groups in open library
-		set allGroups to Â«event ToySRGPNÂ» given Â«class PATHÂ»:"true"
+		set allGroups to Çevent ToySRGPNÈ given Çclass PATHÈ:"true"
 		-- prepend the default bookends groups
 		set allGroups to "All" & return & "Hits" & return & "Attachments" & return & "Selection" & return & allGroups
 		-- split up those groups into elements of an array
@@ -146,7 +146,7 @@ on run argv
 		try
 			tell application "Bookends"
 				-- get a list of all unique reference IDs in the specified group 
-				set myListString to Â«event ToySRUIDÂ» myGroup as string
+				set myListString to Çevent ToySRUIDÈ myGroup as string
 			end tell
 			-- convert to list 
 			set AppleScript's text item delimiters to return
@@ -178,11 +178,11 @@ on run argv
 				
 				-- fetch the BibTeX
 				tell application "Bookends"
-					set myBibTex to Â«event ToySGUIDÂ» thisList given Â«class RRTFÂ»:"false", string:"bibtex"
+					set myBibTex to Çevent ToySGUIDÈ thisList given Çclass RRTFÈ:"false", string:"bibtex"
 				end tell
 				
 				-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
-				write myBibTex to myFile as Â«class utf8Â»
+				write myBibTex to myFile as Çclass utf8È
 				
 				-- update progress bar        
 				set progress completed steps to thisLoop

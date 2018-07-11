@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 require 'json'
 #======class definition======
 class FindReferences

@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 require 'json'
 #======class definition======
 class FindReferencesTitle
@@ -242,7 +241,7 @@ end
 #====== end Class ======
 
 #=== Create object and run it ===
-fR = FindReferences.new
+fR = FindReferencesTitle.new
 
 # check if running under alfred
 fR.using_alfred = true unless ENV['alfred_version'].nil?
