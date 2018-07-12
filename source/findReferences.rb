@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferences
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.0.7'.freeze
+	VER = '1.0.8'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -91,7 +91,7 @@ class FindReferences
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
 			@attachments[i] = thisrec['attachments'].to_s.chomp.strip
-			@attachments[i] = ENV['attachmentsFolder'] + @attachments[i] unless (@attachments[i].empty? || @attachments[i].nil?)
+			@attachments[i] = @attachments_folder + @attachments[i] unless @attachments[i].nil? || @attachments[i].empty? 
 
 			@key[i] = thisrec['user1'].to_s.chomp.strip
 			@key[i] = '' if @uuid[i].nil? || @uuid[i].empty?
@@ -209,11 +209,14 @@ class FindReferences
 		initial = ''
 		unless authorName.nil?
 			s = authorName.split(',')
-			if s.length == 1
+			if s.length == 1 && !s[0].empty?
 				familyName = s[0].chomp.strip
-			elsif s.length == 2
+			elsif s.length == 2 && !s[0].empty?
 				familyName = s[0].chomp.strip
-				initial = ' ' + s[1].gsub!(/^\s*(\w{1})(.*)/, '\1').chomp.strip
+				unless s[1].nil? || s[1].empty?
+					ini = s[1].gsub(/^\s*(\w{1})(.*)/, '\1')
+					initial = ' ' + ini unless ini.nil? || ini.empty?
+				end
 			else
 				familyName = 'Unknown'
 			end
