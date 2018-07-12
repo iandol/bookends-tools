@@ -91,7 +91,7 @@ class FindReferencesAll
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
 			@attachments[i] = thisrec['attachments'].to_s.chomp.strip
-			@attachments[i] = ENV['attachmentsFolder'] + @attachments[i] unless @attachments[i].empty?
+			@attachments[i] = ENV['attachmentsFolder'] + @attachments[i] unless (@attachments[i].empty? || @attachments[i].nil?)
 
 			@key[i] = thisrec['user1'].to_s.chomp.strip
 			@key[i] = '' if @uuid[i].nil? || @uuid[i].empty?
@@ -193,6 +193,7 @@ class FindReferencesAll
 
 	#=== set up et al., etc based on author numbers
 	def parseAuthors(myInput)
+		return 'Unknown' if myInput.nil? || myInput.empty?
 		authors = myInput.chomp.strip.split("\n")
 		if authors.length == 1
 			return processAuthor(authors[0])
