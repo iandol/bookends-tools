@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferences
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.0.8'.freeze
+	VER = '1.0.9'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -26,13 +26,24 @@ class FindReferences
 	end
 
 	def parseSearch(input)
-		input = input[0].split(' ') if input.length == 1
+		return if input.nil? || input.empty?
 		@raw = input
 		input.each do |my_input|
-			if my_input =~ /^-?\d{1,4}$/
-				@year = my_input.to_s
-			elsif my_input =~ /^\S+$/
-				@names.push(my_input)
+			next if my_input.nil? || my_input.empty?
+			phrase = my_input.match(/'([\w\s]+)'/) # is there a quoted phrase?
+			unless phrase.nil?
+				@names.push(phrase[1])
+				my_input = phrase.post_match # add only the post match to the input for parsing
+			end
+			my_input = my_input.gsub(/^'/, '') # possibly didn't close the quote; remove the opening quote
+			next if my_input.nil? || my_input.empty?
+			my_input = my_input.split(' ')
+			my_input.each do |fragment|
+				if fragment =~ /-?\d{1,4}/
+					@year = fragment.to_s
+				elsif fragment =~ /[\w]{1}.+/
+					@names.push(fragment)
+				end
 			end
 		end
 		@cansearch = true unless @names.empty?
@@ -90,8 +101,8 @@ class FindReferences
 			@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
-			@attachments[i] = thisrec['attachments'].to_s.chomp.strip
-			@attachments[i] = @attachments_folder + @attachments[i] unless @attachments[i].nil? || @attachments[i].empty? 
+			att = thisrec['attachments'].split('\n')
+			@attachments[i] = @attachments_folder + att[0] unless att[0].nil? || att[0].empty?
 
 			@key[i] = thisrec['user1'].to_s.chomp.strip
 			@key[i] = '' if @uuid[i].nil? || @uuid[i].empty?
@@ -151,7 +162,7 @@ class FindReferences
 		@uuid.each_with_index do |uuid, i|
 			icon = 'file.png'
 			# icon = 'file+attachment.png' unless @attachments[i].empty?
-			if @attachments[i].empty?
+			if @attachments[i].nil? || @attachments[i].empty?
 				jsonin[i] = {
 					uid: uuid,
 					arg: uuid,
@@ -181,13 +192,13 @@ class FindReferences
 	def returnNullResults
 		if @using_alfred
 			jsono = {
-				comment: 'No Results!',
+				comment: "NO RESULTS! NAMES=#{@names.join(' & ')} | YEAR=#{@year} | SQL=#{@SQL}",
 				items: [],
 				length: 0
 			}
 			puts JSON.generate(jsono)
 		else
-			puts 'No results found!'
+			puts "No results found! NAMES=#{@names.join(' & ')} | YEAR=#{@year} | SQL=#{@SQL}"
 		end
 	end
 
@@ -249,7 +260,7 @@ fR = FindReferences.new
 # check if running under alfred
 fR.using_alfred = true unless ENV['alfred_version'].nil?
 # check if we were passed the attachment folder path
-fR.attachments_folder = ENV['attachmentsFolder'] unless ENV['attachmentsFolder'].nil?
+fR.attachments_folder = ENV['attachmentsFolder'] + '/' unless ENV['attachmentsFolder'].nil?
 
 if ARGV.nil?
 	fR.returnNullResults
