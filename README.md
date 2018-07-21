@@ -28,7 +28,7 @@ Note: the tools denoted by 📄 use Applescript `System Events` to trigger keybo
 
 There are several workflow variables which let you modify the functionality of the tools: 
 
-* `attachmentsFolder` : relative or absolute path to where your Bookends attachments are stored. This is used so that you can Quicklook these from becite / betitle / beall.
+* `attachmentsFolder` : relative or absolute path to where your Bookends attachments are stored. This is used so that you can Quicklook results with PDF attachments from becite / betitle / beall.
 * `appendScopusNotes` (default = TRUE): allows you to toggle the behaviour whereby the Scopus URLs are appended back to the Bookends reference note stream. 
 * `BibTeXtoJSON` (default = FALSE): allows you to convert the BIB file to a JSON file, which at least for Pandoc-citeproc is much faster (~3X) to then process for the bibliography. 
 * `citeUsesRTF`  (default = FALSE) & `commentText`: for the `becite` and `betitle` tools for Pandoc/MMD temporary citations, if you enable this then the temp citation is copied as RTF with a comment-enclosed link back to Bookends. In Scrivener if you enable **Preferences▸Sharing▸Import comments as inline annotations**, then the comment becomes an inline annotation. `commentText` is the text that is linked back to Bookends (default is @).

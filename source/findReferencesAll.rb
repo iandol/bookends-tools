@@ -30,7 +30,7 @@ class FindReferencesAll
 		@raw = input
 		input.each do |my_input|
 			next if my_input.nil? || my_input.empty?
-			phrase = my_input.match(/'([\w\s]+)'/) # is there a quoted phrase?
+			phrase = my_input.match(/'([^']+)'/) # is there a quoted phrase?
 			unless phrase.nil?
 				@names.push(phrase[1])
 				my_input = phrase.post_match # add only the post match to the input for parsing
@@ -39,9 +39,10 @@ class FindReferencesAll
 			next if my_input.nil? || my_input.empty?
 			my_input = my_input.split(' ')
 			my_input.each do |fragment|
-				if fragment =~ /-?\d{1,4}/
+				fragment = fragment.chomp.strip
+				if fragment =~ /\A-?\d{1,4}\z/
 					@year = fragment.to_s
-				elsif fragment =~ /[\w]{1}.+/
+				elsif fragment =~ /[\w]+/
 					@names.push(fragment)
 				end
 			end
@@ -101,7 +102,7 @@ class FindReferencesAll
 			@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
-			att = thisrec['attachments'].split('\n')
+			att = thisrec['attachments'].split("\n")
 			@attachments[i] = @attachments_folder + att[0] unless att[0].nil? || att[0].empty?
 
 			@key[i] = thisrec['user1'].to_s.chomp.strip
