@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferences
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.0.9'.freeze
+	VER = '1.1.0'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -17,6 +17,7 @@ class FindReferences
 		@SQL = ''
 		@list = []
 		@authors = []
+		@editors = []
 		@title = []
 		@date = []
 		@uuid = []
@@ -86,7 +87,7 @@ class FindReferences
 		mylist = @list.join(',')
 		rec = osascript <<-APPL
 		tell application "Bookends"
-			return «event RubyRJSN» "#{mylist}" given string:"title,authors,thedate,attachments,user1"
+			return «event RubyRJSN» "#{mylist}" given string:"title,authors,editors,thedate,attachments,user1"
 		end tell
 		APPL
 		rec = JSON.parse(rec)
@@ -95,6 +96,7 @@ class FindReferences
 			@title[i] = 'Blank' if @title[i].nil? || @title[i].empty?
 
 			@authors[i] = parseAuthors(thisrec['authors'])
+			@editors[i] = parseAuthors(thisrec['editors'])
 
 			@date[i] = thisrec['thedate'].chomp.strip.split(/[\s\/-]/)[0]
 			@date[i] = '????' if @date[i].nil? || @date[i].empty?
@@ -102,11 +104,10 @@ class FindReferences
 			@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
-			att = thisrec['attachments'].split("\n")
-			@attachments[i] = @attachments_folder + att[0] unless att[0].nil? || att[0].empty?
+			@attachments[i] = parseAttachments(thisrec['attachments'])
 
 			@key[i] = thisrec['user1'].to_s.chomp.strip
-			@key[i] = '' if @uuid[i].nil? || @uuid[i].empty?
+			@key[i] = '' if @key[i].nil? || @key[i].empty?
 		end
 	end
 
@@ -156,26 +157,27 @@ class FindReferences
 	end
 
 	def returnResults
-		if @uuid.empty?
-			returnNullResults; return
-		end
+		returnNullResults if @uuid.empty?
+		return if @uuid.empty?
 		jsonin = []
 		@uuid.each_with_index do |uuid, i|
-			icon = 'file.png'
-			# icon = 'file+attachment.png' unless @attachments[i].empty?
+			icon = 'file.png' # icon = 'file+attachment.png' unless @attachments[i].empty?
+			@authors[i].match('Unknown') ? name=@editors[i] : name=@authors[i]
 			if @attachments[i].nil? || @attachments[i].empty?
+				title = name + '  (' + @date[i] + ')'
 				jsonin[i] = {
 					uid: uuid,
 					arg: uuid,
-					title: @authors[i] + '  (' + @date[i] + ')',
+					title: title,
 					subtitle: @title[i],
 					icon: { path: icon.to_s }
 				}
 			else
+				title = name + '  (' + @date[i] + ')  📎'
 				jsonin[i] = {
 					uid: uuid,
 					arg: uuid,
-					title: @authors[i] + '  (' + @date[i] + ')  📎',
+					title: title,
 					quicklookurl: @attachments[i],
 					subtitle: @title[i],
 					icon: { path: icon.to_s }
@@ -215,7 +217,6 @@ class FindReferences
 			return processAuthor(authors[0]) + '  …  ' + processAuthor(authors[-1])
 		end
 	end
-
 	def processAuthor(authorName)
 		familyName = 'Unknown'
 		initial = ''
@@ -234,6 +235,15 @@ class FindReferences
 			end
 		end
 		return familyName + initial
+	end
+
+	def parseAttachments(att)
+		att = att.split("\n")
+		out = @attachments_folder + att[0] unless att.nil? || att.empty?
+		#attachment.each do | att |
+		#	 out = out + ',' + @attachments_folder + att unless att.nil? || att.empty?
+		#end
+		return out
 	end
 
 	def doSearch
@@ -263,7 +273,7 @@ fR.using_alfred = true unless ENV['alfred_version'].nil?
 # check if we were passed the attachment folder path
 fR.attachments_folder = ENV['attachmentsFolder'] + '/' unless ENV['attachmentsFolder'].nil?
 
-if ARGV.nil?
+if ARGV.nil? || ARGV.empty?
 	fR.returnNullResults
 else
 	fR.parseSearch(ARGV)
