@@ -78,7 +78,7 @@ class FindReferencesAll
 		APPL
 		rec = rec.split("\u001E")
 		@list = rec[0].chomp.split("\r")
-		@BEVersion = 13 if rec[1].match(/^13/)
+		@BEVersion = 13 if rec[1] =~ /^13/
 	end
 
 	def getRecords
@@ -162,7 +162,7 @@ class FindReferencesAll
 		jsonin = []
 		@uuid.each_with_index do |uuid, i|
 			icon = 'file.png' # icon = 'file+attachment.png' unless @attachments[i].empty?
-			@authors[i].match('Unknown') ? name=@editors[i] : name=@authors[i]
+			@authors[i] =~ /Unknown/ ? name=@editors[i] : name=@authors[i]
 			if @attachments[i].nil? || @attachments[i].empty?
 				title = name + '  (' + @date[i] + ')'
 				jsonin[i] = {
@@ -209,14 +209,11 @@ class FindReferencesAll
 	def parseAuthors(myInput)
 		return 'Unknown' if myInput.nil? || myInput.empty?
 		authors = myInput.chomp.strip.split("\n")
-		if authors.length == 1
-			return processAuthor(authors[0])
-		elsif authors.length == 2
-			return processAuthor(authors[0]) + ' & ' + processAuthor(authors[1])
-		else
-			return processAuthor(authors[0]) + '  …  ' + processAuthor(authors[-1])
-		end
+		return processAuthor(authors[0]) if authors.length == 1
+		return processAuthor(authors[0]) + ' & ' + processAuthor(authors[1]) if authors.length == 2
+		return processAuthor(authors[0]) + '  …  ' + processAuthor(authors[-1])
 	end
+
 	def processAuthor(authorName)
 		familyName = 'Unknown'
 		initial = ''

@@ -21,7 +21,7 @@ rec = JSON.parse(rec)
 # parse the record
 author = rec[0]['authors'].chomp.strip.split(',')[0]
 author = 'Unknown' if author.to_s.empty?
-date = rec[0]['thedate'].chomp.strip.split(%r([\s\/-]))[0]
+date = rec[0]['thedate'].chomp.strip.split(%r{[\s\/-]})[0]
 date = '????' if date.nil? || date.empty?
 uuid = rec[0]['uniqueID'].to_s.chomp.strip
 uuid = '-1' if uuid.nil? || uuid.empty?

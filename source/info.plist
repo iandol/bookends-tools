@@ -921,7 +921,7 @@
 readonly remote_info_plist='https://raw.githubusercontent.com/iandol/bookends-tools/master/source/info.plist'
 readonly workflow_url='https://raw.githubusercontent.com/iandol/bookends-tools/master/bookends-tools.alfredworkflow'
 readonly download_type='direct' 
-readonly frequency_check='4'
+readonly frequency_check='20'
 
 
 # FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
@@ -2119,7 +2119,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
-1.2.9 — add a new workflow variable `tempCitationStyle` that sets the default temporary citation format for becite/betitle/beall. The default will be Bookends, but you can set this to `Pandoc` / `MMD` / `LaTeX` to paste a different format. Also if authors is empty, now use editor names in the results list.
+1.2.9 — add a new workflow variable `tempCitationStyle` that sets the default temporary citation format for **becite** / **betitle** / **beall**. When unset it will be the Bookends standard `{author,year,#id}`, but you can set the variable to `Pandoc` / `MMD` / `LaTeX` to paste the citation in a different format (`[@key]` / `[#key]` / `\\cite[]{key}`). Also if the authors field is empty for a reference, we now try to use editor names instead in the Alfred results list.
 1.2.8 — add phrase search, so for example 'optical coherence' 2013 will find papers that use that exact phrase rather than before where optical and coherence were searched irrespective of their location.
 1.2.7 — handle empty author fields better.
 1.2.6 - betitle and beall broke in the last commit, fix them here...
@@ -2415,7 +2415,7 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>1240</integer>
+			<integer>1230</integer>
 			<key>ypos</key>
 			<integer>100</integer>
 		</dict>
