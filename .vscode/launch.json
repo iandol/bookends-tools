@@ -5,7 +5,14 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Local File",
+			"name": "Debug file",
+			"type": "Ruby",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"program": "${file}"
+		},
+		{
+			"name": "Debug findReferences",
 			"type": "Ruby",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
@@ -27,46 +34,6 @@
 			"remoteHost": "127.0.0.1",
 			"remotePort": "1234",
 			"remoteWorkspaceRoot": "${workspaceRoot}"
-		},
-		{
-			"name": "Rails server",
-			"type": "Ruby",
-			"request": "launch",
-			"cwd": "${workspaceRoot}",
-			"program": "${workspaceRoot}/bin/rails",
-			"args": [
-				"server"
-			]
-		},
-		{
-			"name": "RSpec - all",
-			"type": "Ruby",
-			"request": "launch",
-			"cwd": "${workspaceRoot}",
-			"program": "${workspaceRoot}/bin/rspec",
-			"args": [
-				"-I",
-				"${workspaceRoot}"
-			]
-		},
-		{
-			"name": "RSpec - active spec file only",
-			"type": "Ruby",
-			"request": "launch",
-			"cwd": "${workspaceRoot}",
-			"program": "${workspaceRoot}/bin/rspec",
-			"args": [
-				"-I",
-				"${workspaceRoot}",
-				"${file}"
-			]
-		},
-		{
-			"name": "Cucumber",
-			"type": "Ruby",
-			"request": "launch",
-			"cwd": "${workspaceRoot}",
-			"program": "${workspaceRoot}/bin/cucumber"
 		}
 	]
 }

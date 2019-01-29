@@ -28,6 +28,7 @@ class FindReferences
 
 	def parseSearch(input)
 		return if input.nil? || input.empty?
+
 		@raw = input
 		input.each do |my_input|
 			next if my_input.nil? || my_input.empty?
@@ -53,6 +54,7 @@ class FindReferences
 
 	def constructSQL
 		return unless @cansearch
+
 		@names.each do |name|
 			if @SQL.empty?
 				@SQL = "(authors REGEX '(?i)#{name}' OR editors REGEX '(?i)#{name}')"
@@ -84,6 +86,7 @@ class FindReferences
 	def getRecords
 		return unless @cansearch
 		return if @list.empty?
+
 		mylist = @list.join(',')
 		rec = osascript <<-APPL
 		tell application "Bookends"
@@ -114,6 +117,7 @@ class FindReferences
 	def getRecordsLegacy
 		return unless @cansearch
 		return if @list.empty?
+
 		mylist = @list.join(',')
 		myorder = ['title', 'authors', 'date', 'uniqueid']
 		rec = osascript <<-APPL
@@ -159,6 +163,7 @@ class FindReferences
 	def returnResults
 		returnNullResults if @uuid.empty?
 		return if @uuid.empty?
+
 		jsonin = []
 		@uuid.each_with_index do |uuid, i|
 			icon = 'file.png' # icon = 'file+attachment.png' unless @attachments[i].empty?
@@ -208,6 +213,7 @@ class FindReferences
 	#=== set up et al., etc based on author numbers
 	def parseAuthors(myInput)
 		return 'Unknown' if myInput.nil? || myInput.empty?
+
 		authors = myInput.chomp.strip.split("\n")
 		return processAuthor(authors[0]) if authors.length == 1
 		return processAuthor(authors[0]) + ' & ' + processAuthor(authors[1]) if authors.length == 2
