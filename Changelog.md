@@ -1,4 +1,5 @@
 # Changelog
+* 1.3.1 — **bequick**: don't "hide" bookends, rather refocus previous app…
 * 1.3.0 — **bequick**: small tweak to hide bookends after triggering "quick-add", giving focus back to browser.
 * 1.2.9 — add a new workflow variable `tempCitationStyle` that sets the default temporary citation format for **becite** / **betitle** / **beall**. When unset it will be the Bookends standard `{author,year,#id}`, but you can set the variable to `Pandoc` / `MMD` / `LaTeX` to paste the citation in a different format (`[@key]` / `[#key]` / `\\cite[]{key}`). Also if the authors field is empty for a reference, we now try to use editor names instead in the Alfred results list.
 * 1.2.8 — add phrase search, so for example 'optical coherence' 2013 will find papers that use that exact phrase rather than before where optical and coherence were searched irrespective of their location.
