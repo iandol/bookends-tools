@@ -11,9 +11,12 @@ var pName = pApp.properties().name;
 se.keystroke('c', {using: ['command down']} );
 delay(0.2)
 
-//activate bookends
+//Quick add to bookends
 var be = Application('Bookends');
+be.includeStandardAdditions = true;
 be.activate();
+//clipContents = be.theClipboard()
+//be.quickAdd(clipContents) //new command in 13.2
 
 //open quick add paste from clipboard
 delay(0.5);

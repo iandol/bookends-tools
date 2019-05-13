@@ -19,26 +19,26 @@
 
 on run argv
 	--Version------------------------------------------------------------------------
-	set myVersion to 1.18
-
+	set myVersion to 1.19
+	
 	--Start Time----------------------------------------------------------------------
 	set originalT to (time of (current date))
-
+	
 	--User Options-------------------------------------------------------------------
 	set showCitation to true -- show temp citation in main text (it will always be shown in the child notes)?
 	set citationPMID to false -- replace the uniqueID with PMID in the temp citation if present
 	set useBibTeXKey to true -- use BiBteX formatting for temp citation
 	set showHeaderOption to false -- ask user about header-only cards?
-
+	
 	--Variable Setup-----------------------------------------------------------------
 	--Set Counters
 	set nbr_references to 0
 	set nbr_notes to 0
-
+	
 	--Set Control Variables
 	set remove_headers to true
 	set userCanceled to false
-
+	
 	--Set Old Text Delimiters
 	set tid to AppleScript's text item delimiters
 	set note_delimiter to (ASCII character 10) & (ASCII character 10)
@@ -46,18 +46,18 @@ on run argv
 	set date_separators to {"/", " ", ".", "-"}
 	set digits to {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
 	set era_first_digit to {"1", "2"}
-
+	
 	--set Bookends Delimiters
 	set be_page_nbr_delimiter to "@"
 	set be_header_delimiter to "#"
 	set be_tag_delimiter to "%"
 	set be_quote_delimiter to ">"
 	set be_cite_delimiter to ";"
-
+	
 	--set image content tags
 	set open_image_tag to "<iimg>"
 	set end_image_tag to "</iimg>"
-
+	
 	--Set OPML Text variables
 	set xml_version to "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" & return
 	set opml_version to "<opml version=\"1.0\">" & return
@@ -71,7 +71,7 @@ on run argv
 	set opml_outline to tab & tab & "<outline text=\""
 	set opml_outline_close to tab & tab & "</outline>" & return
 	set opml_notes to "  _note=\""
-
+	
 	--File Name and Setup-----------------------------------------------------------------
 	set remove_headers to true
 	if showHeaderOption is true then
@@ -81,7 +81,7 @@ on run argv
 		end try
 		if button returned of AlertResult is "No" then set remove_headers to false
 	end if
-
+	
 	set homePath to POSIX path of (path to home folder)
 	if (count of argv) > 0 then
 		set myPath to POSIX path of (homePath & (item 1 of argv) & "/")
@@ -99,7 +99,7 @@ on run argv
 			display dialog "No Boookends References were selected." & return & return & "Please select 1 or more references and restart"
 			return false
 		end if
-
+		
 		--Write OPML Version, Headers, and Open Body statements to File---------------
 		my write_to_file(xml_version, myFile, false)
 		my write_to_file(opml_version, myFile, true)
@@ -108,24 +108,24 @@ on run argv
 		my write_to_file(opml_date, myFile, true)
 		my write_to_file(opml_header_close, myFile, true)
 		my write_to_file(opml_body, myFile, true)
-
+		
 		set selected_ids to words of selected_ids
-
+		
 		--Process Handiling For Each Reference------------------------------------------
 		--get citation, quotes, comments, and tags for of the selected references
 		repeat with i from 1 to length of selected_ids
-
+			
 			--set variables and counters
 			set ref_id to item i of selected_ids
 			set ref_nbr to ref_id
 			set nbr_references to nbr_references + 1
-
+			
 			--FOR EACH REFERENCE BUILD THE TOP LEVEL OPML OUTLINE 
-
+			
 			--Reference Author or Editor      
 			set ref_author to «event ToySRFLD» ref_id given string:"authors"
 			if ref_author is "" then set ref_author to «event ToySRFLD» ref_id given string:"editors"
-
+			
 			if ref_author is "" then
 				set ref_title to "No Authors or Editors"
 			else
@@ -148,7 +148,7 @@ on run argv
 				set ref_author to my replace_bad_characters(ref_author)
 			end if
 			set AppleScript's text item delimiters to tid
-
+			
 			--Reference Year      
 			set ref_date to «event ToySRFLD» ref_id given string:"thedate"
 			if ref_date is "" then
@@ -261,7 +261,7 @@ on run argv
 			repeat with p from 1 to length of ref_notes
 				--reset variables
 				set header_only to false
-				set keywords to false
+				set mykeywords to false
 				set quotes to false
 				set ref_note_header to " "
 				set ref_page_nbr to "##"
@@ -395,7 +395,7 @@ on run argv
 					set ref_cite_key to "Citation Key: " & cite
 					
 					set note_card to "" as text
-					if keywords is true then set note_card to note_card & ref_key
+					if mykeywords is true then set note_card to note_card & ref_key
 					if quotes is true then set note_card to note_card & ref_quote
 					set note_card to note_card & ref_comment & ref_cite_key
 					
