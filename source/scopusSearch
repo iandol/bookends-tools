@@ -1,20 +1,21 @@
 #!/usr/bin/env ruby
 
 require 'net/http'
+require 'uri'
 require 'json'
 require 'cgi'
 require 'optparse' # ruby standard option parser
 
 #--------------------------------class definitiom
 class ScopusSearch
-	attr_accessor :options, :version, :using_alfred
-	VER = '1.0.9'.freeze
+	attr_accessor :options, :version, :using_alfred, :scopusBaseURL
+	VER = '1.0.10'.freeze
 	OPT = Struct.new(:key, :doi, :uuid, :source, :openURLs, :append)
 	
 	#--------------------- constructor
 	def initialize # set up class
 		@options = OPT.new('7f59af901d2d86f78a1fd60c1bf9426a', 
-											'', '', 'scopus', false, true)
+								'', '', 'scopus', false, false)
 		@version = VER
 		@using_alfred = false
 		@surl = ''
@@ -23,7 +24,9 @@ class ScopusSearch
 		@uuid = ''
 		@title = ''
 		@subtitle = ''
+		@cited = ''
 		@success = false
+		@scopusBaseURL = ''
 	end
 
 	# ###############################parse inputs
@@ -59,24 +62,21 @@ class ScopusSearch
 	def run
 		returnNullResults('Incomplete input options...') if options.doi.nil? || options.key.nil?
 		url = 'https://api.elsevier.com/content/search/' + options.source
-		url += '?query=DOI%28' + CGI.escape(@options.doi) + '%29'
+		url += '?query=DOI%28%22' + CGI.escape(@options.doi) + '%22%29'
 		url += '&apiKey=' + @options.key
 		url += '&httpAccept=application%2Fjson'
 		uri = URI(url)
 		begin
-			response = Net::HTTP.get(uri)
-			# this is better but doesn't work in the old Ruby supplied in macOS
-			# http = Net::HTTP.new(uri.host, uri.port)
-			# request = Net::HTTP::Get.new(uri.request_uri)
-			# request.add_field('Accept', 'application/json')
-			# response = http.request(request)
-			# response = response.body
+			#response = Net::HTTP.get(uri)
+			response = Net::HTTP.get_response(uri)
+			response = response.body
 		rescue Net::ReadTimeout => e
 			response = ''
 		end
 		response, n, json = parseResponse(response)
-		if n > 0
-			parseJSON(json)
+		parseJSON(json) if n > 0
+		if @success == true
+			changeBaseURL
 			returnResults
 		else
 			returnNullResults(response)
@@ -110,6 +110,8 @@ class ScopusSearch
 			@uuid = 'none' if @uuid.nil?
 			@title = re['dc:title']
 			@creator = re['dc:creator']
+			@cited = re['citedby-count']
+			@cited = '' if @cited.nil?
 			links = re['link']
 			links.each do |lnk|
 				if lnk['@ref'] == options.source
@@ -127,16 +129,16 @@ class ScopusSearch
 	def returnResults
 		if @using_alfred
 			jsonc = {
-				uid: @uuid + "B", 
+				uid: @uuid + "A", 
 				arg: @scite, 
-				title: "CITING: " + @title, 
-				subtitle: "Open URL for papers that cite this paper..."
+				title: "#{@cited} CITING: " + @title, 
+				subtitle: "Open URL for #{@cited} papers that cite this paper..."
 			}
 			if @surl.empty?
 				jsono = { items: [jsonc]}
 			else
 				jsons = {  
-					uid: @uuid + "A", 
+					uid: @uuid + "B", 
 					arg: @surl, 
 					title: @title, 
 					subtitle: "Open URL to the reference..."
@@ -145,7 +147,7 @@ class ScopusSearch
 			end
 			puts JSON.pretty_generate(jsono)
 		else
-			puts 'SCOPUS CITED: ' + @scite + "\nSCOPUS ENTRY: " + @surl
+			puts 'SCOPUS ' + @cited + ' CITED: ' + @scite + "\nSCOPUS ENTRY: " + @surl
 		end
 	end
 
@@ -173,22 +175,50 @@ class ScopusSearch
 		return unless @success == true
 		return unless @options.append == true
 		return if @options.uuid.empty?
-		puts "Will try to write to ID=#{options.uuid}…" unless using_alfred
-		newnotea = '#SCOPUS CITED:'
-		newnoteb = @scite
-		newnotec = '#SCOPUS URL:'
-		newnoted = @surl
+		puts "Will try to write to ID=#{options.uuid}…" unless @using_alfred
+		newnote = "#SCOPUS #{@cited} CITES: #{@scite}\r\r#SCOPUS URL: #{@surl}"
 		osascript <<-EOT
 		tell application "Bookends"
-			set notes to «event ToySRFLD» #{options.uuid} given string:"notes"
-			if notes is not equal to "" then
-				set notes to notes & return & return
-			end if
-			set out to notes & "#{newnotea}" & return & "#{newnoteb}" & return & return & "#{newnotec}" & return & "#{newnoted}"
-			«event ToySSFLD» #{options.uuid} given «class FLDN»:"notes", string:out
+			tell front library window
+				set tnote to notes of publication item id #{options.uuid}
+				if tnote is not equal to "" then
+					set tnote to tnote & return & return
+				end if
+				set out to tnote & "#{newnote}" & return & return
+				set notes of publication item id #{options.uuid} to out
+			end tell
 		end tell
 		EOT
-		puts " … finished appending to: ID=#{options.uuid}" unless using_alfred
+		puts "… finished appending to: ID=#{options.uuid}" unless using_alfred
+	end
+
+	def getDOI
+		results = osascript <<-EOT
+		tell application "Bookends"
+			set mynull to ASCII character 30
+			set myRefs to selected publication items of front library window
+			set thisID to id of first item of myRefs
+			set thisDOI to doi of first item of myRefs
+			return thisID & mynull & thisDOI
+		end tell
+		EOT
+		if results.nil? || results.empty?
+			@options[:uuid] = ''
+			@options[:doi] = ''
+		else
+			results = results.split("\u001E") 
+			@options[:uuid] = results[0].chomp.strip
+			doi = results[1].chomp.strip
+			doi = '' if doi.nil?
+			@options[:doi] = doi
+		end
+	end
+
+	def changeBaseURL
+		return unless @success == true
+		return if @scopusBaseURL.empty?
+		@scite.gsub!(/https:\/\/[^\/]+\//,@scopusBaseURL)
+		@surl.gsub!(/https:\/\/[^\/]+\//,@scopusBaseURL)
 	end
 
 	def open_links
@@ -222,27 +252,16 @@ ss.options.key = key unless key.nil? || key.empty?
 
 # check ENV for append option, overrides ARGV
 append = ENV['appendScopusNotes']
-unless append.nil? || append.empty?
+unless append.nil? || append.empty? || append.to_s =~ /(false|0)/
 	ss.options.append = true
-	ss.options.append = false if append.to_s =~ /(false|0)/
 end
 
+# check ENV for baseURL option
+ss.scopusBaseURL = ENV['scopusBaseURL']
+ss.scopusBaseURL = '' if ss.scopusBaseURL.nil?
+
 # if no DOI try to get our DOI directly from the selected ref in Bookends
-if ss.options.doi.empty?
-	results = ss.osascript <<-EOT
-	tell application "Bookends"
-		set mynull to ASCII character 30
-		set sid to «event ToySRUID» "Selection"
-		set doi to «event ToySRFLD» sid given string:"user17"
-		return sid & mynull & doi
-	end tell
-	EOT
-	results = results.split("\u001E")
-	ss.options.uuid = results[0].chomp.strip
-	doi = results[1].chomp.strip
-	doi = '' if doi.nil?
-	ss.options.doi = doi
-end
+ss.getDOI if ss.options.doi.empty?
 
 if ss.options.doi.empty?
 	ss.returnNoDOI

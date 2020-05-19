@@ -4,6 +4,7 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
+
 		{
 			"name": "Debug file",
 			"type": "Ruby",
@@ -24,6 +25,22 @@
 				"tempCitationStyle": "Pandoc",
 				"alfred_version": "13",
 				"attachmentsFolder": "/Users/ian/Library/Mobile Documents/iCloud~com~sonnysoftware~bot/Documents/"
+			}
+		},
+		{
+			"name": "scopusSearch Debug",
+			"type": "Ruby",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"program": "${file}",
+			"args": [ "" ],
+			"env": {
+				"BASE": "${workspaceRoot}",
+				"EXT": "${fileExtname}",
+				"appendScopusNotes": "true",
+				"alfred_version": "13",
+				"scopusKey": "7f59af901d2d86f78a1fd60c1bf9426a",
+				"scopusBaseURL": "https://www-scopus-com-443.webvpn.las.ac.cn/"
 			}
 		},
 		{
