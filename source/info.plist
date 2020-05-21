@@ -77,7 +77,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>9A9A0A3C-2C7F-4090-B509-E425513C003F</string>
+				<string>9A37578D-3D7C-4E05-91EE-C698E0759217</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -425,6 +425,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>AD2BCA17-2984-4CEA-A5CD-95C46E564514</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9A37578D-3D7C-4E05-91EE-C698E0759217</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9A9A0A3C-2C7F-4090-B509-E425513C003F</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -867,7 +880,7 @@
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
-				<string>http://www.ncbi.nlm.nih.gov/pubmed/?term={query}</string>
+				<string>https://pubmed.ncbi.nlm.nih.gov/?term={query}</string>
 				<key>utf8</key>
 				<true/>
 			</dict>
@@ -935,13 +948,13 @@ function url_exists {
 }
 
 function notification {
-  readonly local notificator="$(find . -type d -name 'Notificator.app')"
+  local -r notificator="$(find . -type d -name 'Notificator.app')"
   if [[ -n "${notificator}" ]]; then
     "${notificator}/Contents/Resources/Scripts/notificator" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
     return
   fi
 
-  readonly local terminal_notifier="$(find . -type f -name 'terminal-notifier')"
+  local -r terminal_notifier="$(find . -type f -name 'terminal-notifier')"
   if [[ -n "${terminal_notifier}" ]]; then
     "${terminal_notifier}" -title "${alfred_workflow_name}" -subtitle 'A new version is available' -message "${1}"
     return
@@ -1055,6 +1068,8 @@ fi</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1093,7 +1108,7 @@ fi</string>
 			<key>uid</key>
 			<string>4A249976-4818-4EF5-96F1-61E2775BA9C0</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1228,6 +1243,8 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 				<integer>-1</integer>
 				<key>keymod</key>
 				<integer>1048576</integer>
+				<key>overridewithargument</key>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.dispatchkeycombo</string>
@@ -1388,6 +1405,8 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1426,7 +1445,7 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<key>uid</key>
 			<string>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>type</key>
@@ -1491,6 +1510,8 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1529,7 +1550,7 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<key>uid</key>
 			<string>5104FD23-CC20-40A1-A27E-A0462BB604D4</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1816,6 +1837,8 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 				<integer>-1</integer>
 				<key>keymod</key>
 				<integer>1048576</integer>
+				<key>overridewithargument</key>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.dispatchkeycombo</string>
@@ -1831,6 +1854,8 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -1869,7 +1894,7 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<key>uid</key>
 			<string>A75B2A34-0C2C-411E-AA36-103E1ADE612F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2045,6 +2070,8 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -2060,7 +2087,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 				<key>queuedelaymode</key>
 				<integer>1</integer>
 				<key>queuemode</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string>Scopus API may take some time, please wait...</string>
 				<key>script</key>
@@ -2083,7 +2110,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<key>uid</key>
 			<string>20DFCB80-8C35-46DB-97E3-B7A9D7C2C372</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2116,10 +2143,41 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{query}</string>
+						<key>matchcasesensitive</key>
+						<false/>
+						<key>matchmode</key>
+						<integer>4</integer>
+						<key>matchstring</key>
+						<string>-1</string>
+						<key>outputlabel</key>
+						<string>fail</string>
+						<key>uid</key>
+						<string>04EF8D90-5BAF-4C44-9FB9-8CEE52033A4E</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>open</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>9A37578D-3D7C-4E05-91EE-C698E0759217</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string># Changelog
-1.3.2 — betoopml: fix script
+1.3.3 — bescopus: update applescript with better error checking and working round a proxy open-uri issue in ruby, added an environment variable to specify a scopusBaseURL prefix, if for e.g. you access through a proxy.
+1.3.2 — botoopml: fix script
 1.3.1 — bequick: don't "hide" bookends, rather refocus previous app…
 1.3.0 — bequick: small tweak to hide bookends after triggering "quick-add", giving focus back to browser.
 1.2.9 — add a new workflow variable `tempCitationStyle` that sets the default temporary citation format for **becite** / **betitle** / **beall**. When unset it will be the Bookends standard `{author,year,#id}`, but you can set the variable to `Pandoc` / `MMD` / `LaTeX` to paste the citation in a different format (`[@key]` / `[#key]` / `\\cite[]{key}`). Also if the authors field is empty for a reference, we now try to use editor names instead in the Alfred results list.
@@ -2262,7 +2320,7 @@ A set of Bookends scripts to perform 11 different functions:
 		<key>362E2BBD-18F1-4C69-9872-5C291C8E19E3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>445</integer>
 			<key>ypos</key>
 			<integer>1110</integer>
 		</dict>
@@ -2404,12 +2462,21 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>ypos</key>
 			<integer>610</integer>
 		</dict>
+		<key>9A37578D-3D7C-4E05-91EE-C698E0759217</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>6</integer>
+			<key>xpos</key>
+			<integer>245</integer>
+			<key>ypos</key>
+			<integer>1190</integer>
+		</dict>
 		<key>9A9A0A3C-2C7F-4090-B509-E425513C003F</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>6</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<integer>305</integer>
 			<key>ypos</key>
 			<integer>1170</integer>
 		</dict>
@@ -2630,7 +2697,7 @@ A set of Bookends scripts to perform 11 different functions:
 		<key>BibTeXtoJSON</key>
 		<string>false</string>
 		<key>appendScopusNotes</key>
-		<string>true</string>
+		<string>false</string>
 		<key>attachmentsFolder</key>
 		<string>/Users/ian/Library/Mobile Documents/iCloud~com~sonnysoftware~bot/Documents/</string>
 		<key>citationStyle</key>
@@ -2643,6 +2710,8 @@ A set of Bookends scripts to perform 11 different functions:
 		<string>Desktop/</string>
 		<key>protectBibTitles</key>
 		<string>false</string>
+		<key>scopusBaseURL</key>
+		<string>https://www-scopus-com-443.webvpn.las.ac.cn/</string>
 		<key>scopusKey</key>
 		<string>49aa3c8cee1ffcc90be782be61ec8383</string>
 		<key>tempCitationStyle</key>
@@ -2650,12 +2719,13 @@ A set of Bookends scripts to perform 11 different functions:
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
+		<string>attachmentsFolder</string>
 		<string>tempCitationStyle</string>
 		<string>scopusKey</string>
-		<string>attachmentsFolder</string>
+		<string>scopusBaseURL</string>
 	</array>
 	<key>version</key>
-	<string>1.3.2</string>
+	<string>1.3.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

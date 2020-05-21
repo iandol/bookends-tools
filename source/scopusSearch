@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'net/http'
-require 'uri'
+require 'open-uri'
 require 'json'
 require 'cgi'
 require 'optparse' # ruby standard option parser
@@ -65,13 +64,21 @@ class ScopusSearch
 		url += '?query=DOI%28%22' + CGI.escape(@options.doi) + '%22%29'
 		url += '&apiKey=' + @options.key
 		url += '&httpAccept=application%2Fjson'
-		uri = URI(url)
+		response = ''
 		begin
-			#response = Net::HTTP.get(uri)
-			response = Net::HTTP.get_response(uri)
-			response = response.body
-		rescue Net::ReadTimeout => e
-			response = ''
+			uri = URI.parse(url)
+			response = uri.open(:proxy => nil).read
+		rescue => exception
+			if @using_alfred
+				subt = "Fetching => #{@options.doi}"
+				subt = "Try to disable system proxy. " + subt if exception.to_s =~ /127.0.0.1/
+				jsono = { items: [{  uid: 'error', arg: '', title: 'URI error:'+exception.to_s, 
+					subtitle: subt }] }
+				puts JSON.pretty_generate(jsono)
+			else
+				puts 'Error fetching DOI: ' + exception.to_s
+			end
+			exit(false)
 		end
 		response, n, json = parseResponse(response)
 		parseJSON(json) if n > 0
@@ -84,7 +91,7 @@ class ScopusSearch
 	end
 
 	def parseResponse(response)
-		if response == ''
+		if response.nil? || response.empty?
 			n = 0
 			response = 'Response empty'
 			json = ''
@@ -132,7 +139,7 @@ class ScopusSearch
 				uid: @uuid + "A", 
 				arg: @scite, 
 				title: "#{@cited} CITING: " + @title, 
-				subtitle: "Open URL for #{@cited} papers that cite this paper..."
+				subtitle: 'Open URL to papers that cite this paper…'
 			}
 			if @surl.empty?
 				jsono = { items: [jsonc]}
@@ -153,22 +160,24 @@ class ScopusSearch
 
 	def returnNoDOI()
 		if @using_alfred
-			jsono = { items: [{  uid: 'error', arg: '', title: 'No DOI was found!', 
+			jsono = { items: [{  uid: 'error', arg: '-1', title: 'No DOI; please select ref with DOI!', 
 				subtitle: 'Unique ID => ' + @options.uuid }] }
 			puts JSON.pretty_generate(jsono)
 		else
 			puts 'No DOI was specified or found: ' + @options.uuid + ' - ' + response
 		end
+		exit(0)
 	end
 
 	def returnNullResults(response)
 		if @using_alfred
-			jsono = { items: [{  uid: 'error', arg: '', title: 'Sorry, no entry in Scopus was found', 
+			jsono = { items: [{  uid: 'error', arg: '-1', title: 'Sorry, no entry in Scopus was found', 
 				subtitle: @options.doi + " => " + response }] }
 			puts JSON.pretty_generate(jsono)
 		else
 			puts 'No results found for: ' + @options.doi + ' => ' + response
 		end
+		exit(0)
 	end
 
 	def writeNotes
@@ -269,4 +278,5 @@ else
 	ss.run
 	ss.writeNotes
 	ss.open_links
+	ENV['scopusSearchReturn'] = '0'
 end

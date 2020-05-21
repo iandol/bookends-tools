@@ -4,7 +4,6 @@
 	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 	"version": "0.2.0",
 	"configurations": [
-
 		{
 			"name": "Debug file",
 			"type": "Ruby",
@@ -13,7 +12,7 @@
 			"program": "${file}"
 		},
 		{
-			"name": "Debug findReferences",
+			"name": "findReferences",
 			"type": "Ruby",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
@@ -28,18 +27,27 @@
 			}
 		},
 		{
-			"name": "scopusSearch Debug",
+			"name": "scopusSearch NO commandline",
 			"type": "Ruby",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			"program": "${file}",
 			"args": [ "" ],
 			"env": {
-				"BASE": "${workspaceRoot}",
-				"EXT": "${fileExtname}",
+				"scopusBaseURL": "https://www-scopus-com-443.webvpn.las.ac.cn/",
 				"appendScopusNotes": "true",
 				"alfred_version": "13",
-				"scopusKey": "7f59af901d2d86f78a1fd60c1bf9426a",
+				"scopusKey": "7f59af901d2d86f78a1fd60c1bf9426a"
+			}
+		},
+		{
+			"name": "scopusSearch + commandline",
+			"type": "Ruby",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"program": "${file}",
+			"args": [ "-d '10.1016/j.cub.2009.01.061'" ],
+			"env": {
 				"scopusBaseURL": "https://www-scopus-com-443.webvpn.las.ac.cn/"
 			}
 		},
