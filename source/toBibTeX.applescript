@@ -221,9 +221,14 @@ on run argv
 		-- Convert to JSON? JSON is much faster to parse for pandoc-citeproc
 		if (toJSON is true) and (isCiteproc is true) then
 			set cmd to cpPath & " -j " & quotedName & " > " & quotedJSONName
-			do shell script cmd
-			do shell script "rm -f " & quotedName
-			set output to output & "(to JSON)"
+			try
+				do shell script cmd
+				do shell script "rm -f " & quotedName
+				set output to output & "(to JSON)"
+			on error errorMessage number errorNumber
+				do shell script "rm -f " & quotedJSONName
+				display notification "Error: " & errorMessage with title "JSON Error: " & errorNumber subtitle "Check your cite keys."
+			end
 		end if
 		
 	end repeat
