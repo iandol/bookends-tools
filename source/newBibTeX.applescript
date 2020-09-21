@@ -1,17 +1,16 @@
 use AppleScript version "2.4" -- Yosemite (10.10) or later
 use scripting additions
-
+-- this uses the new Bookends applescript API, works fine but takes about 2X longer to process than the old event system...
 tell application "Bookends"
 	tell front library window
 		try
-			set groupName to "Core"
-			set tGroup to group items whose id ends with groupName
-			set tGroup to first item of tGroup
+			set groupName to "Ideas"
+			set tGroup to first group item whose id contains groupName
 			set outFile to ((path to desktop from user domain) as string) & "Bibliography.bib"
 			set myFile to open for access outFile with write permission
 			set eof of myFile to 0 --make sure we overwrite
-			set steps to 25
-			set listLength to length of first item in tGroup
+			set steps to 30
+			set listLength to count of publication items of tGroup
 			set nLoop to round (listLength / steps) rounding up
 			set thisLoop to 1
 			
@@ -23,17 +22,12 @@ tell application "Bookends"
 					set endindex to listLength
 				end if
 				-- select current batch of items
-				set thisListItems to items startindex thru endindex of publication items of tGroup
-				set thisList to thisListItems as string
-				
-				set bibContent to format thisList using "BibTeX Minimal.fmt"
-				
+				set myPubs to publication items startindex thru endindex of tGroup
+				set bibtexRefs to format myPubs using "BibTeX-Minimal.fmt"
 				-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
-				write bibContent to myFile as «class utf8»
-				
+				write bibtexRefs to myFile as «class utf8»
 				-- update the loop number
 				set thisLoop to thisLoop + 1
-				
 			end repeat -- thisLoop
 			
 			close access myFile

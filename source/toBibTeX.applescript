@@ -1,7 +1,7 @@
 #!/usr/bin/osascript
 (*
 Script originally written by Naupaka Zimmerman, modified by iandol
-August 10, 2017
+August 10, 2017 -- current version V2020.1.14
 
 MIT License
 
@@ -72,7 +72,7 @@ on run argv
 	--start time
 	set originalT to (time of (current date))
 	--version
-	set myVersion to 1.13
+	set myVersion to 1.14
 	-- store default delimiters
 	set oldDelimiters to AppleScript's text item delimiters
 	-- protect titles?
@@ -88,6 +88,11 @@ on run argv
 		set toJSON to true
 	else
 		set toJSON to false
+	end if
+	-- get export name option
+	set fmtName to (system attribute "customExportFormat" as string)
+	if fmtName is "" then
+		set fmtName to "BibTeX"
 	end if
 	-- check that pandoc-citeproc is available
 	set cpPath to "/usr/local/bin/pandoc-citeproc"
@@ -116,7 +121,7 @@ on run argv
 	
 	tell application "Bookends"
 		-- get a list of all groups in open library
-		set allGroups to Çevent ToySRGPNÈ given Çclass PATHÈ:"true"
+		set allGroups to Â«event ToySRGPNÂ» given Â«class PATHÂ»:"true"
 		-- prepend the default bookends groups
 		set allGroups to "All" & return & "Hits" & return & "Attachments" & return & "Selection" & return & allGroups
 		-- split up those groups into elements of an array
@@ -127,7 +132,7 @@ on run argv
 	if myGroupArray is {} then
 		set output to "No groups matched your input..."
 	else
-		display notification "Running BibTeX conversion, please wait..." with title "Bookends to BibTeX exporter V" & myVersion
+		display notification "Running " & fmtName & " conversion, please wait..." with title "Bookends to BibTeX exporter V" & myVersion
 		-- set output string based on parsed input parameters or defaults
 		set AppleScript's text item delimiters to ", "
 		set output to ("Path: " & myPath & " | " & "Groups:" & myGroupArray & "." as string)
@@ -146,7 +151,7 @@ on run argv
 		try
 			tell application "Bookends"
 				-- get a list of all unique reference IDs in the specified group 
-				set myListString to Çevent ToySRUIDÈ myGroup as string
+				set myListString to Â«event ToySRUIDÂ» myGroup as string
 			end tell
 			-- convert to list 
 			set AppleScript's text item delimiters to return
@@ -178,11 +183,11 @@ on run argv
 				
 				-- fetch the BibTeX
 				tell application "Bookends"
-					set myBibTex to Çevent ToySGUIDÈ thisList given Çclass RRTFÈ:"false", string:"bibtex"
+					set myBibTex to Â«event ToySGUIDÂ» thisList given Â«class RRTFÂ»:"false", string:fmtName
 				end tell
 				
 				-- write out as UTF-8, from: http://macscripter.net/viewtopic.php?id=24534
-				write myBibTex to myFile as Çclass utf8È
+				write myBibTex to myFile as Â«class utf8Â»
 				
 				-- update progress bar        
 				set progress completed steps to thisLoop
@@ -228,7 +233,7 @@ on run argv
 			on error errorMessage number errorNumber
 				do shell script "rm -f " & quotedJSONName
 				display notification "Error: " & errorMessage with title "JSON Error: " & errorNumber subtitle "Check your cite keys."
-			end
+			end try
 		end if
 		
 	end repeat
