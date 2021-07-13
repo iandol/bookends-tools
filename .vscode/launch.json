@@ -5,11 +5,39 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug file",
+			"name": "Python: Current File",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}",
+			"args": [
+				"(Chichilnisky and Kalmar, 2002; Zaghloul et al., 2003; Liang and Freed, 2010, 2012; Freed, 2017)"
+			]
+		},
+		{
+			"name": "Attach",
+			"port": 9229,
+			"request": "attach",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"type": "pwa-node"
+		},
+		{
+			"name": "Debug Ruby file",
 			"type": "Ruby",
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			"program": "${file}"
+		},
+		{
+			"name": "Debug getKeys",
+			"type": "Ruby",
+			"request": "launch",
+			"cwd": "${workspaceRoot}",
+			"program": "${file}",
+			"args": [
+				"(Chichilnisky and Kalmar, 2002; Zaghloul et al., 2003; Liang and Freed, 2010, 2012; Freed, 2017)"
+			]
 		},
 		{
 			"name": "findReferences",
@@ -17,7 +45,9 @@
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			"program": "${file}",
-			"args": [ "Hobson" ],
+			"args": [
+				"Hobson"
+			],
 			"env": {
 				"BASE": "${workspaceRoot}",
 				"EXT": "${fileExtname}",
@@ -32,7 +62,9 @@
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			"program": "${file}",
-			"args": [ "" ],
+			"args": [
+				""
+			],
 			"env": {
 				"scopusBaseURL": "https://www-scopus-com-443.webvpn.las.ac.cn/",
 				"appendScopusNotes": "true",
@@ -46,7 +78,9 @@
 			"request": "launch",
 			"cwd": "${workspaceRoot}",
 			"program": "${file}",
-			"args": [ "-d '10.1016/j.cub.2009.01.061'" ],
+			"args": [
+				"-d '10.1016/j.cub.2009.01.061'"
+			],
 			"env": {
 				"scopusBaseURL": "https://www-scopus-com-443.webvpn.las.ac.cn/"
 			}

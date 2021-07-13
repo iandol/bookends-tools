@@ -1,4 +1,7 @@
 # Changelog
+* 1.3.6 — **bebib**: make sure this uses the `citeUsesRTF` variable so you can choose RTF or plain text output. There is also a new tool **beconvert** which is only useful if you want to convert author-date formatted citations to temp bibtex key intext citations.
+* 1.3.5 — **betobibtex**: Allow using a customised BibTeX formatter, default is the builtin BibTeX, but for example you can make a modified format removing address and abstract that makes export faster and the resultant files much smaller.
+* 1.3.4 — **bequickadd**: use the new applescript command rather than GUI scripting; **betobibtex**: if JSON conversion is empty (perhaps an empty citekey or other problem), warn the user and don't delete the source bibtex file.
 * 1.3.3 — **bescopus**: update applescript with better error checking and working round a proxy open-uri issue in ruby, added an environment variable `scopusBaseURL` to specify a replacement base url prefix, if for e.g. you access through a proxy.
 * 1.3.2 — **botoopml**: fix script
 * 1.3.1 — **bequick**: don't "hide" bookends, rather refocus previous app…

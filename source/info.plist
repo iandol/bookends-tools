@@ -607,6 +607,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>B1782E7B-51D4-4DAE-9A0F-80F116137850</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A80DD956-2ECF-4A7E-AA01-8ECBCCF88755</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B186CBDB-0806-4D20-A198-2BB658E4883C</key>
 		<array>
 			<dict>
@@ -737,6 +750,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>E387844F-BBC0-4405-9E28-2B3A5B9A7A18</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A80DD956-2ECF-4A7E-AA01-8ECBCCF88755</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>E50B449E-6EF4-448F-A5B3-152FD1FCAF09</key>
 		<array>
 			<dict>
@@ -816,27 +842,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>beidsearch</string>
-				<key>subtext</key>
-				<string>Search a selected Bookends reference number</string>
-				<key>text</key>
-				<string>Select unique ID ⇨ Open Bookends URI</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>8753A6A9-9785-4B60-BF1D-1D759BE79C1F</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>subtext</key>
 				<string>try in pubmed</string>
 				<key>text</key>
@@ -846,48 +851,6 @@
 			<string>alfred.workflow.trigger.fallback</string>
 			<key>uid</key>
 			<string>E50B449E-6EF4-448F-A5B3-152FD1FCAF09</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>osascript openSelectedID.applescript</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>openSelectedID.applescript</string>
-				<key>type</key>
-				<integer>8</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>EABF7A78-1D69-46C2-84DC-200A4B715A40</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>browser</key>
-				<string></string>
-				<key>spaces</key>
-				<string></string>
-				<key>url</key>
-				<string>https://pubmed.ncbi.nlm.nih.gov/?term={query}</string>
-				<key>utf8</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.openurl</string>
-			<key>uid</key>
-			<string>E977EE79-677D-4A9A-81F7-2925A1A9B442</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -919,6 +882,69 @@
 			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
 			<string>DF797FDD-D3A9-4FE9-871E-7A5D2DA3153B</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>beidsearch</string>
+				<key>subtext</key>
+				<string>Search a selected Bookends reference number</string>
+				<key>text</key>
+				<string>Select unique ID ⇨ Open Bookends URI</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>8753A6A9-9785-4B60-BF1D-1D759BE79C1F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>https://pubmed.ncbi.nlm.nih.gov/?term={query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>E977EE79-677D-4A9A-81F7-2925A1A9B442</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>osascript openSelectedID.applescript</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>openSelectedID.applescript</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>EABF7A78-1D69-46C2-84DC-200A4B715A40</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -1033,37 +1059,6 @@ fi</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>hotstring</key>
-				<string></string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>3861F91A-323B-484E-BAD2-FC5CC2A3A839</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -1109,6 +1104,37 @@ fi</string>
 			<string>4A249976-4818-4EF5-96F1-61E2775BA9C0</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>hotstring</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>3861F91A-323B-484E-BAD2-FC5CC2A3A839</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1162,37 +1188,6 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>hotstring</key>
-				<string></string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>B186CBDB-0806-4D20-A198-2BB658E4883C</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -1233,6 +1228,37 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<string>5262C5A9-E597-4A30-BDB9-79D9BE9EFD26</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>hotstring</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>B186CBDB-0806-4D20-A198-2BB658E4883C</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1322,29 +1348,6 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>osascript quickSearch.applescript</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>quickSearch.applescript</string>
-				<key>type</key>
-				<integer>8</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>FE092458-F99E-459C-AFCE-73416F547908</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -1376,29 +1379,23 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
+				<key>concurrently</key>
 				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>osascript quickSearch.applescript</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>quickSearch.applescript</string>
+				<key>type</key>
+				<integer>8</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</string>
+			<string>FE092458-F99E-459C-AFCE-73416F547908</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -1452,6 +1449,35 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<integer>3</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
@@ -1477,35 +1503,6 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<string>FF840781-EBBE-44A2-988B-04C6344B7D55</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>B07B05D6-DC81-4F38-A06F-1C9F84003306</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1555,6 +1552,35 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<string>5104FD23-CC20-40A1-A27E-A0462BB604D4</string>
 			<key>version</key>
 			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>B07B05D6-DC81-4F38-A06F-1C9F84003306</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1612,6 +1638,27 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>bequickadd</string>
+				<key>subtext</key>
+				<string>Add selected DOI/PMID to Bookends</string>
+				<key>text</key>
+				<string>Selected Text ⇨ Bookends Quick Add…</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>96F0D8B0-DE69-419D-A55C-70AEE0385E36</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -1639,27 +1686,6 @@ end run</string>
 			<string>C55D7DE4-15E7-47C5-8970-2EF4EAFB6031</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>bequickadd</string>
-				<key>subtext</key>
-				<string>Add selected DOI/PMID to Bookends</string>
-				<key>text</key>
-				<string>Selected Text ⇨ Bookends Quick Add…</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>96F0D8B0-DE69-419D-A55C-70AEE0385E36</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1700,6 +1726,27 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>betobibtex</string>
+				<key>subtext</key>
+				<string>Enter BE group name(s) to export to a BibTeX file; seperate multiple groups with comma. If no group specified, selected refs are exported...</string>
+				<key>text</key>
+				<string>Bookends ⇨ BibTeX BIB file</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>362D8958-5B18-4606-A04A-917C2E88A202</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -1731,23 +1778,42 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>betobibtex</string>
-				<key>subtext</key>
-				<string>Enter BE group name(s) to export to a BibTeX file; seperate multiple groups with comma. If no group specified, selected refs are exported...</string>
-				<key>text</key>
-				<string>Bookends ⇨ BibTeX BIB file</string>
-				<key>withspace</key>
-				<true/>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>USERTF=$citeUsesRTF
+UUID="{query}"
+if [[ $USERTF == 'true' ]]; then
+REFNAME=$(/usr/bin/osascript &lt;&lt; EOT
+tell application "Bookends"
+  return «event ToySGUID» "$UUID" given «class RRTF»:"true", string:"$citationStyle"
+end tell
+EOT)
+echo "$REFNAME" | pbcopy -Prefer rtf
+else
+REFNAME=$(/usr/bin/osascript &lt;&lt; EOT
+tell application "Bookends"
+  return «event ToySGUID» "$UUID" given «class RRTF»:"false", string:"$citationStyle"
+end tell
+EOT)
+echo "$REFNAME" | pbcopy -Prefer txt
+
+fi</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>362D8958-5B18-4606-A04A-917C2E88A202</string>
+			<string>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1775,31 +1841,51 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
+				<key>alfredfiltersresults</key>
 				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>68</integer>
+				<key>keyword</key>
+				<string>bebib</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching database...</string>
 				<key>script</key>
-				<string>UUID="{query}"
-REFNAME=$(/usr/bin/osascript &lt;&lt; EOT
-tell application "Bookends"
-    return «event ToySGUID» "$UUID" given «class RRTF»:"true", string:"$citationStyle"
-end tell
-EOT)
-echo "$REFNAME" | pbcopy -Prefer rtf</string>
+				<string>osascript findReferences.applescript "{query}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
-				<string></string>
+				<string>findReferences.rb</string>
+				<key>subtext</key>
+				<string>Enter author name using simple search or REGEX (case insensitive)</string>
+				<key>title</key>
+				<string>BE search by author ⇨ Bibliography Item</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>8</integer>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</string>
+			<string>A75B2A34-0C2C-411E-AA36-103E1ADE612F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1859,55 +1945,6 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>68</integer>
-				<key>keyword</key>
-				<string>bebib</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>1</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching database...</string>
-				<key>script</key>
-				<string>osascript findReferences.applescript "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string>findReferences.rb</string>
-				<key>subtext</key>
-				<string>Enter author name using simple search or REGEX (case insensitive)</string>
-				<key>title</key>
-				<string>BE search by author ⇨ Bibliography Item</string>
-				<key>type</key>
-				<integer>8</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>A75B2A34-0C2C-411E-AA36-103E1ADE612F</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -1935,6 +1972,27 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<string>D9792099-269D-4DB6-8004-D464611EE841</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>betoopml</string>
+				<key>subtext</key>
+				<string>Make OPML from the BE selection</string>
+				<key>text</key>
+				<string>Bookends ⇨ OPML</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>22024FC1-AB07-46D9-93B3-B4F25AE9AAF8</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -1993,27 +2051,6 @@ echo "[#$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>betoopml</string>
-				<key>subtext</key>
-				<string>Make OPML from the BE selection</string>
-				<key>text</key>
-				<string>Bookends ⇨ OPML</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>22024FC1-AB07-46D9-93B3-B4F25AE9AAF8</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -2056,6 +2093,81 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>osascript quickAdd.applescript</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>getKeys.rb</string>
+				<key>type</key>
+				<integer>8</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>A80DD956-2ECF-4A7E-AA01-8ECBCCF88755</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>beconvert</string>
+				<key>subtext</key>
+				<string></string>
+				<key>text</key>
+				<string>Selected Text ⇨ Convert to keys</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>E387844F-BBC0-4405-9E28-2B3A5B9A7A18</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>hotstring</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>B1782E7B-51D4-4DAE-9A0F-80F116137850</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>spaces</key>
@@ -2071,6 +2183,37 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<string>9A9A0A3C-2C7F-4090-B509-E425513C003F</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>hotstring</key>
+				<string></string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>A58CE08D-D622-4B55-81C3-7D948E3CB220</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2124,37 +2267,6 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>hotstring</key>
-				<string></string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>A58CE08D-D622-4B55-81C3-7D948E3CB220</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>conditions</key>
 				<array>
 					<dict>
@@ -2185,6 +2297,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
+1.3.6 — bebib: make sure this uses the citeUsesRTF variable so you can choose RTF or plain text output. There is also a new tool beconvert which is only useful if you want to convert author-date formatted citations to temp bibtex key intext citations.
 1.3.5 — betobibtex: Allow using a customised BibTeX formatter, default is the builtin BibTeX, but for example you can make a modified format removing address and abstract that makes export faster and the resultant files much smaller.
 1.3.4 — bequickadd: use the new applescript command rather than GUI scripting; betobibtex: if JSON conversion is empty (perhaps an empty citekey or other problem), warn the user and don't delete the source bibtex file.
 1.3.3 — bescopus: update applescript with better error checking and working round a proxy open-uri issue in ruby, added an environment variable to specify a scopusBaseURL prefix, if for e.g. you access through a proxy.
@@ -2520,6 +2633,15 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>ypos</key>
 			<integer>900</integer>
 		</dict>
+		<key>A80DD956-2ECF-4A7E-AA01-8ECBCCF88755</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>xpos</key>
+			<integer>780</integer>
+			<key>ypos</key>
+			<integer>1165</integer>
+		</dict>
 		<key>AD2BCA17-2984-4CEA-A5CD-95C46E564514</key>
 		<dict>
 			<key>colorindex</key>
@@ -2557,6 +2679,15 @@ A set of Bookends scripts to perform 11 different functions:
 			<integer>270</integer>
 			<key>ypos</key>
 			<integer>200</integer>
+		</dict>
+		<key>B1782E7B-51D4-4DAE-9A0F-80F116137850</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>1165</integer>
 		</dict>
 		<key>B186CBDB-0806-4D20-A198-2BB658E4883C</key>
 		<dict>
@@ -2650,6 +2781,17 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>ypos</key>
 			<integer>590</integer>
 		</dict>
+		<key>E387844F-BBC0-4405-9E28-2B3A5B9A7A18</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>Converts a plaintext formatted author-date citation to a LaTeX style temporary citation</string>
+			<key>xpos</key>
+			<integer>650</integer>
+			<key>ypos</key>
+			<integer>1165</integer>
+		</dict>
 		<key>E50B449E-6EF4-448F-A5B3-152FD1FCAF09</key>
 		<dict>
 			<key>note</key>
@@ -2712,13 +2854,13 @@ A set of Bookends scripts to perform 11 different functions:
 		<key>attachmentsFolder</key>
 		<string>/Users/ian/Library/Mobile Documents/iCloud~com~sonnysoftware~bot/Documents/</string>
 		<key>citationStyle</key>
-		<string>APA 6th Edition</string>
+		<string>APA 7th Edition</string>
 		<key>citeUsesRTF</key>
 		<string>false</string>
 		<key>commentText</key>
 		<string>@</string>
 		<key>customExportFormat</key>
-		<string></string>
+		<string>BibTeX-Minimal</string>
 		<key>exportPath</key>
 		<string>Desktop/</string>
 		<key>protectBibTitles</key>
@@ -2739,7 +2881,7 @@ A set of Bookends scripts to perform 11 different functions:
 		<string>scopusBaseURL</string>
 	</array>
 	<key>version</key>
-	<string>1.3.5</string>
+	<string>1.3.6</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>
