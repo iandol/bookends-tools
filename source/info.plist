@@ -47,6 +47,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>09D86596-53CF-4E99-9338-D824894239C2</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AB5423B0-B833-49C2-93D2-14BB325BCC23</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>0B187036-9768-4D10-8F39-88BCAC7B1C39</key>
 		<array>
 			<dict>
@@ -244,6 +257,16 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
+				<string>09D86596-53CF-4E99-9338-D824894239C2</string>
+				<key>modifiers</key>
+				<integer>1572864</integer>
+				<key>modifiersubtext</key>
+				<string>Open PDF…</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</string>
 				<key>modifiers</key>
 				<integer>262144</integer>
@@ -302,6 +325,16 @@
 				<integer>8388608</integer>
 				<key>modifiersubtext</key>
 				<string>Open attachment in Bookends…</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>09D86596-53CF-4E99-9338-D824894239C2</string>
+				<key>modifiers</key>
+				<integer>1572864</integer>
+				<key>modifiersubtext</key>
+				<string>Open PDF…</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -476,6 +509,16 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
+				<string>09D86596-53CF-4E99-9338-D824894239C2</string>
+				<key>modifiers</key>
+				<integer>1572864</integer>
+				<key>modifiersubtext</key>
+				<string>Open PDF…</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
 				<string>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</string>
 				<key>modifiers</key>
 				<integer>0</integer>
@@ -505,6 +548,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>AB5423B0-B833-49C2-93D2-14BB325BCC23</key>
+		<array/>
 		<key>AD2BCA17-2984-4CEA-A5CD-95C46E564514</key>
 		<array>
 			<dict>
@@ -567,6 +612,16 @@
 				<integer>8388608</integer>
 				<key>modifiersubtext</key>
 				<string>Open attachment in Bookends…</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>09D86596-53CF-4E99-9338-D824894239C2</string>
+				<key>modifiers</key>
+				<integer>1572864</integer>
+				<key>modifiersubtext</key>
+				<string>Open PDF…</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
@@ -1716,10 +1771,52 @@ end run</string>
 			<integer>2</integer>
 		</dict>
 		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>if [[ -n "$PDF" ]]; then
+    open "$PDF"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>AB5423B0-B833-49C2-93D2-14BB325BCC23</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.junction</string>
 			<key>uid</key>
 			<string>05F9E0A0-73C7-4901-868A-E3B727EE7C14</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>09D86596-53CF-4E99-9338-D824894239C2</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -2297,6 +2394,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
+1.3.7 — becite/betitle/beall/bebib: allow ⌘⌥ [command][option] to open an attached PDF directly.
 1.3.6 — bebib: make sure this uses the citeUsesRTF variable so you can choose RTF or plain text output. There is also a new tool beconvert which is only useful if you want to convert author-date formatted citations to temp bibtex key intext citations.
 1.3.5 — betobibtex: Allow using a customised BibTeX formatter, default is the builtin BibTeX, but for example you can make a modified format removing address and abstract that makes export faster and the resultant files much smaller.
 1.3.4 — bequickadd: use the new applescript command rather than GUI scripting; betobibtex: if JSON conversion is empty (perhaps an empty citekey or other problem), warn the user and don't delete the source bibtex file.
@@ -2373,6 +2471,15 @@ A set of Bookends scripts to perform 11 different functions:
 			<integer>10</integer>
 			<key>ypos</key>
 			<integer>790</integer>
+		</dict>
+		<key>09D86596-53CF-4E99-9338-D824894239C2</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>825</integer>
+			<key>ypos</key>
+			<integer>735</integer>
 		</dict>
 		<key>0B187036-9768-4D10-8F39-88BCAC7B1C39</key>
 		<dict>
@@ -2642,6 +2749,15 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>ypos</key>
 			<integer>1165</integer>
 		</dict>
+		<key>AB5423B0-B833-49C2-93D2-14BB325BCC23</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>10</integer>
+			<key>xpos</key>
+			<integer>970</integer>
+			<key>ypos</key>
+			<integer>705</integer>
+		</dict>
 		<key>AD2BCA17-2984-4CEA-A5CD-95C46E564514</key>
 		<dict>
 			<key>colorindex</key>
@@ -2840,7 +2956,7 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>970</integer>
+			<integer>985</integer>
 			<key>ypos</key>
 			<integer>460</integer>
 		</dict>
@@ -2881,7 +2997,7 @@ A set of Bookends scripts to perform 11 different functions:
 		<string>scopusBaseURL</string>
 	</array>
 	<key>version</key>
-	<string>1.3.6</string>
+	<string>1.3.7</string>
 	<key>webaddress</key>
 	<string>https://github.com/iandol/bookends-tools</string>
 </dict>

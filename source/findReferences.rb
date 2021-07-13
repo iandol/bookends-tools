@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferences
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.1.0'.freeze
+	VER = '1.1.1'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -185,7 +185,8 @@ class FindReferences
 					title: title,
 					quicklookurl: @attachments[i],
 					subtitle: @title[i],
-					icon: { path: icon.to_s }
+					icon: { path: icon.to_s },
+					variables: { PDF: @attachments[i] }
 				}
 			end
 		end
