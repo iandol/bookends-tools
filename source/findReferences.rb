@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferences
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.1.1'.freeze
+	VER = '1.1.2'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -168,6 +168,7 @@ class FindReferences
 		@uuid.each_with_index do |uuid, i|
 			icon = 'file.png' # icon = 'file+attachment.png' unless @attachments[i].empty?
 			@authors[i] =~ /Unknown/ ? name=@editors[i] : name=@authors[i]
+			name = 'Unknown' if name.nil? || name.empty?
 			if @attachments[i].nil? || @attachments[i].empty?
 				title = name + '  (' + @date[i] + ')'
 				jsonin[i] = {

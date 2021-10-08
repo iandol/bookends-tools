@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferencesTitle
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.1.0'.freeze
+	VER = '1.1.2'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -28,6 +28,7 @@ class FindReferencesTitle
 
 	def parseSearch(input)
 		return if input.nil? || input.empty?
+
 		@raw = input
 		input.each do |my_input|
 			next if my_input.nil? || my_input.empty?
@@ -53,6 +54,7 @@ class FindReferencesTitle
 
 	def constructSQL
 		return unless @cansearch
+
 		@names.each do |name|
 			if @SQL.empty?
 				@SQL = "(title REGEX '(?i)#{name}' OR keywords REGEX '(?i)#{name}')"
@@ -84,6 +86,7 @@ class FindReferencesTitle
 	def getRecords
 		return unless @cansearch
 		return if @list.empty?
+
 		mylist = @list.join(',')
 		rec = osascript <<-APPL
 		tell application "Bookends"
@@ -114,6 +117,7 @@ class FindReferencesTitle
 	def getRecordsLegacy
 		return unless @cansearch
 		return if @list.empty?
+
 		mylist = @list.join(',')
 		myorder = ['title', 'authors', 'date', 'uniqueid']
 		rec = osascript <<-APPL
@@ -159,10 +163,12 @@ class FindReferencesTitle
 	def returnResults
 		returnNullResults if @uuid.empty?
 		return if @uuid.empty?
+
 		jsonin = []
 		@uuid.each_with_index do |uuid, i|
 			icon = 'file.png' # icon = 'file+attachment.png' unless @attachments[i].empty?
 			@authors[i] =~ /Unknown/ ? name=@editors[i] : name=@authors[i]
+			name = 'Unknown' if name.nil? || name.empty?
 			if @attachments[i].nil? || @attachments[i].empty?
 				title = name + '  (' + @date[i] + ')'
 				jsonin[i] = {
@@ -180,7 +186,8 @@ class FindReferencesTitle
 					title: title,
 					quicklookurl: @attachments[i],
 					subtitle: @title[i],
-					icon: { path: icon.to_s }
+					icon: { path: icon.to_s },
+					variables: { PDF: @attachments[i] }
 				}
 			end
 		end
@@ -208,6 +215,7 @@ class FindReferencesTitle
 	#=== set up et al., etc based on author numbers
 	def parseAuthors(myInput)
 		return 'Unknown' if myInput.nil? || myInput.empty?
+
 		authors = myInput.chomp.strip.split("\n")
 		return processAuthor(authors[0]) if authors.length == 1
 		return processAuthor(authors[0]) + ' & ' + processAuthor(authors[1]) if authors.length == 2
