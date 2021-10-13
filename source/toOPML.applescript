@@ -1,5 +1,5 @@
 #!/usr/bin/osascript
---Script to Export Bookends Notes to OPML file v1.18
+--Script to Export Bookends Notes to OPML file v1.20
 --Written by Dave Glogowski (modified by iandol)
 --07 August 2017
 --
@@ -19,7 +19,7 @@
 
 on run argv
 	--Version------------------------------------------------------------------------
-	set myVersion to 1.19
+	set myVersion to 1.20
 	
 	--Start Time----------------------------------------------------------------------
 	set originalT to (time of (current date))
