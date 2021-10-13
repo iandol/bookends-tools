@@ -1,5 +1,5 @@
 # Changelog
-1.3.9 — allow [shift]+[control] to copy the `bookends://` link as text in **becite**, **betitle** and **beall**.
+* 1.3.9 — allow ⇧⌃ [shift]+[control] to copy the `bookends://` link as text in **becite**, **betitle** and **beall**.
 * 1.3.8.1 — bugfix for attachments
 * 1.3.8 — minor tweak to fix error if both author and editor fields are empty for **beall**, **becite** and **betitle**.
 1.3.7 — **becite**/**betitle**/**beall**/**bebib**: allow ⌘⌥ [command][option] to open an attached PDF directly.
