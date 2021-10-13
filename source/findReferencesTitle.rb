@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferencesTitle
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.1.2'.freeze
+	VER = '1.1.3'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -80,7 +80,7 @@ class FindReferencesTitle
 		APPL
 		rec = rec.split("\u001E")
 		@list = rec[0].chomp.split("\r")
-		@BEVersion = 13 if rec[1] =~ /^13/
+		@BEVersion = rec[1].chomp.strip.to_f unless rec[1].nil? || rec[1].empty?
 	end
 
 	def getRecords
@@ -254,7 +254,7 @@ class FindReferencesTitle
 	def doSearch
 		constructSQL
 		doSQLSearch
-		if @BEVersion == 13
+		if @BEVersion >= 13
 			getRecords
 		else
 			getRecordsLegacy
