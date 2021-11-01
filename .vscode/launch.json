@@ -52,7 +52,7 @@
 				"BASE": "${workspaceRoot}",
 				"EXT": "${fileExtname}",
 				"tempCitationStyle": "Pandoc",
-				"alfred_version": "13",
+				"alfred_version": "14.0.1",
 				"attachmentsFolder": "/Users/ian/Library/Mobile Documents/iCloud~com~sonnysoftware~bot/Documents"
 			}
 		},
