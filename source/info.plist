@@ -999,12 +999,14 @@
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
 				<string>https://pubmed.ncbi.nlm.nih.gov/?term={query}</string>
-				<key>utf8</key>
-				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -1429,7 +1431,7 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>osascript makeTempCitation.applescript $1</string>
+				<string></string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -1610,12 +1612,14 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
 				<string>bookends://sonnysoftware.com/{query}</string>
-				<key>utf8</key>
-				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -1707,12 +1711,14 @@ echo "[@$BIBKEY]" | tr -d '\n' | pbcopy</string>
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
 				<string>bookends://sonnysoftware.com/{query}</string>
-				<key>utf8</key>
-				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -2332,12 +2338,14 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 			<dict>
 				<key>browser</key>
 				<string></string>
+				<key>skipqueryencode</key>
+				<false/>
+				<key>skipvarencode</key>
+				<false/>
 				<key>spaces</key>
 				<string></string>
 				<key>url</key>
 				<string>{query}</string>
-				<key>utf8</key>
-				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.action.openurl</string>
@@ -2448,6 +2456,8 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 				</array>
 				<key>elselabel</key>
 				<string>open</string>
+				<key>hideelse</key>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.conditional</string>
@@ -2459,6 +2469,7 @@ echo "[^$BIBKEY]: $REFNAME" | pbcopy -Prefer txt</string>
 	</array>
 	<key>readme</key>
 	<string># Changelog
+1.3.10 — compatibility update for Bookends V15.1.2
 1.3.9 — allow shift+control to copy the bookends:// link as text in becite, betitle and beall
 1.3.8.1 — bugfix for attachments
 1.3.8 — minor tweak to fix error if both author and editor fields are empty for beall becite and betitle
@@ -2520,50 +2531,50 @@ A set of Bookends scripts to perform 11 different functions:
 		<key>02697A5F-64BD-4F60-9823-94EB19626487</key>
 		<dict>
 			<key>xpos</key>
-			<integer>430</integer>
+			<real>430</real>
 			<key>ypos</key>
-			<integer>130</integer>
+			<real>130</real>
 		</dict>
 		<key>05F9E0A0-73C7-4901-868A-E3B727EE7C14</key>
 		<dict>
 			<key>xpos</key>
-			<integer>420</integer>
+			<real>420</real>
 			<key>ypos</key>
-			<integer>730</integer>
+			<real>730</real>
 		</dict>
 		<key>07A0668C-9537-4BA7-8D1F-2F10DF7C8949</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>4</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>790</integer>
+			<real>790</real>
 		</dict>
 		<key>09D86596-53CF-4E99-9338-D824894239C2</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>825</integer>
+			<real>825</real>
 			<key>ypos</key>
-			<integer>735</integer>
+			<real>735</real>
 		</dict>
 		<key>0B187036-9768-4D10-8F39-88BCAC7B1C39</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>12</integer>
 			<key>xpos</key>
-			<integer>800</integer>
+			<real>800</real>
 			<key>ypos</key>
-			<integer>900</integer>
+			<real>900</real>
 		</dict>
 		<key>19E75CB7-31D3-423C-9831-1D4DA9343BC6</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1220</integer>
+			<real>1220</real>
 			<key>ypos</key>
-			<integer>130</integer>
+			<real>130</real>
 		</dict>
 		<key>20DFCB80-8C35-46DB-97E3-B7A9D7C2C372</key>
 		<dict>
@@ -2572,9 +2583,9 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Takes selected ref in Bookends and does a Scopus search, returns ref and cited-by URLs. Appends the URLs to reference Notes field.</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>1170</integer>
+			<real>1170</real>
 		</dict>
 		<key>22024FC1-AB07-46D9-93B3-B4F25AE9AAF8</key>
 		<dict>
@@ -2583,27 +2594,27 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Takes Bookends current selection and converts to an OPML file to import into Scrivener or other software</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>980</integer>
+			<real>980</real>
 		</dict>
 		<key>2E915B82-E157-429F-8DC1-F4C4518AFBF8</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>8</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>980</integer>
+			<real>980</real>
 		</dict>
 		<key>3582963E-329A-4FFD-933A-10C6950BC007</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>360</integer>
+			<real>360</real>
 		</dict>
 		<key>362D8958-5B18-4606-A04A-917C2E88A202</key>
 		<dict>
@@ -2612,43 +2623,43 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Enter a group name and it will export to a BibTeX file. Configure output folder in variables (defaults to Desktop)...</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>790</integer>
+			<real>790</real>
 		</dict>
 		<key>362E2BBD-18F1-4C69-9872-5C291C8E19E3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>445</integer>
+			<real>445</real>
 			<key>ypos</key>
-			<integer>1110</integer>
+			<real>1110</real>
 		</dict>
 		<key>3861F91A-323B-484E-BAD2-FC5CC2A3A839</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>480</integer>
+			<real>480</real>
 			<key>ypos</key>
-			<integer>170</integer>
+			<real>170</real>
 		</dict>
 		<key>39792D22-E411-4B39-95C6-8861A7E3ACA3</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>920</integer>
+			<real>920</real>
 			<key>ypos</key>
-			<integer>195</integer>
+			<real>195</real>
 		</dict>
 		<key>42E1E519-7522-4BE7-987E-1A39E5A92C64</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>12</integer>
 			<key>xpos</key>
-			<integer>800</integer>
+			<real>800</real>
 			<key>ypos</key>
-			<integer>1010</integer>
+			<real>1010</real>
 		</dict>
 		<key>4A249976-4818-4EF5-96F1-61E2775BA9C0</key>
 		<dict>
@@ -2657,9 +2668,9 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Enter author names [optional year] to return a list. Press [⌘,⌥]ENTER and it will copy the TEMPORARY CITATION.</string>
 			<key>xpos</key>
-			<integer>610</integer>
+			<real>610</real>
 			<key>ypos</key>
-			<integer>170</integer>
+			<real>170</real>
 		</dict>
 		<key>5104FD23-CC20-40A1-A27E-A0462BB604D4</key>
 		<dict>
@@ -2668,9 +2679,9 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Enter text in any field (case insensitive REGEX) and it'll return references as a list. Press [⌘,⌥]ENTER and it will copy the TEMPORARY CITATION.</string>
 			<key>xpos</key>
-			<integer>610</integer>
+			<real>610</real>
 			<key>ypos</key>
-			<integer>570</integer>
+			<real>570</real>
 		</dict>
 		<key>5262C5A9-E597-4A30-BDB9-79D9BE9EFD26</key>
 		<dict>
@@ -2679,18 +2690,18 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Copies selected text and opens it in the Bookends Pubmed browser.</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>200</integer>
+			<real>200</real>
 		</dict>
 		<key>61E1DD47-C893-46AC-9DF4-60EF7CE1B85B</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>12</integer>
 			<key>xpos</key>
-			<integer>800</integer>
+			<real>800</real>
 			<key>ypos</key>
-			<integer>790</integer>
+			<real>790</real>
 		</dict>
 		<key>63E2A815-A08E-4E62-811D-C8F3D06D738B</key>
 		<dict>
@@ -2699,25 +2710,25 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Takes selected citation and searches for it in Bookends quick search; e.g. (Lettvin et al., 1959) becomes [Lettvin 1959]. Supports unformatted citations: {Hubel &amp; wiesel, 1962, #343}⇨[Hubel Wiesel 1962] and [@Pandoc] refs too.</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>360</integer>
+			<real>360</real>
 		</dict>
 		<key>656E29E1-A513-44E5-8BB7-B1D97FC26D82</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>4</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>790</integer>
+			<real>790</real>
 		</dict>
 		<key>75712617-811E-43D1-9FE0-B2DDABECCB66</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1180</integer>
+			<real>1180</real>
 			<key>ypos</key>
-			<integer>430</integer>
+			<real>430</real>
 		</dict>
 		<key>8753A6A9-9785-4B60-BF1D-1D759BE79C1F</key>
 		<dict>
@@ -2726,9 +2737,9 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Select a Bookends unique ID in a foreground app and find it via a Bookends URI open.</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>9364E8B8-7E56-4C6D-BD69-C23DE9D19174</key>
 		<dict>
@@ -2737,18 +2748,18 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>MMD</string>
 			<key>xpos</key>
-			<integer>840</integer>
+			<real>840</real>
 			<key>ypos</key>
-			<integer>200</integer>
+			<real>200</real>
 		</dict>
 		<key>968CEE5D-FF10-4DD2-906F-6C64292EDC54</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>1060</integer>
+			<real>1060</real>
 			<key>ypos</key>
-			<integer>260</integer>
+			<real>260</real>
 		</dict>
 		<key>96F0D8B0-DE69-419D-A55C-70AEE0385E36</key>
 		<dict>
@@ -2757,45 +2768,45 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Copies selected DOI/PMID/arXiv and pastes it into quick-add.</string>
 			<key>xpos</key>
-			<integer>140</integer>
+			<real>140</real>
 			<key>ypos</key>
-			<integer>610</integer>
+			<real>610</real>
 		</dict>
 		<key>9A37578D-3D7C-4E05-91EE-C698E0759217</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>6</integer>
 			<key>xpos</key>
-			<integer>230</integer>
+			<real>230</real>
 			<key>ypos</key>
-			<integer>1190</integer>
+			<real>1190</real>
 		</dict>
 		<key>9A9A0A3C-2C7F-4090-B509-E425513C003F</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>6</integer>
 			<key>xpos</key>
-			<integer>290</integer>
+			<real>290</real>
 			<key>ypos</key>
-			<integer>1170</integer>
+			<real>1170</real>
 		</dict>
 		<key>9CE1CCA5-C5F0-485B-BB88-C230295DB203</key>
 		<dict>
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>1230</integer>
+			<real>1230</real>
 			<key>ypos</key>
-			<integer>100</integer>
+			<real>100</real>
 		</dict>
 		<key>A58CE08D-D622-4B55-81C3-7D948E3CB220</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>6</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>1170</integer>
+			<real>1170</real>
 		</dict>
 		<key>A75B2A34-0C2C-411E-AA36-103E1ADE612F</key>
 		<dict>
@@ -2804,36 +2815,36 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Enter author name and it'll return references list to Alfred results dropdown. Press [⌘,⌥]ENTER and it will copy the FORMATTED REFERENCE.</string>
 			<key>xpos</key>
-			<integer>620</integer>
+			<real>620</real>
 			<key>ypos</key>
-			<integer>900</integer>
+			<real>900</real>
 		</dict>
 		<key>A80DD956-2ECF-4A7E-AA01-8ECBCCF88755</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>xpos</key>
-			<integer>795</integer>
+			<real>795</real>
 			<key>ypos</key>
-			<integer>1165</integer>
+			<real>1165</real>
 		</dict>
 		<key>AB5423B0-B833-49C2-93D2-14BB325BCC23</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>970</integer>
+			<real>970</real>
 			<key>ypos</key>
-			<integer>705</integer>
+			<real>705</real>
 		</dict>
 		<key>AD2BCA17-2984-4CEA-A5CD-95C46E564514</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>610</integer>
+			<real>610</real>
 		</dict>
 		<key>AF9E34FC-E9F8-4166-8393-B00A3059F8ED</key>
 		<dict>
@@ -2842,54 +2853,54 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Enter title search (case insensitive) and it'll return references as a list. Press [⌘,⌥]ENTER and it will copy the TEMPORARY CITATION.</string>
 			<key>xpos</key>
-			<integer>610</integer>
+			<real>610</real>
 			<key>ypos</key>
-			<integer>370</integer>
+			<real>370</real>
 		</dict>
 		<key>B07B05D6-DC81-4F38-A06F-1C9F84003306</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>480</integer>
+			<real>480</real>
 			<key>ypos</key>
-			<integer>570</integer>
+			<real>570</real>
 		</dict>
 		<key>B14F1D3F-1FBF-4B85-87D0-9346F0BA1141</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>2</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>200</integer>
+			<real>200</real>
 		</dict>
 		<key>B1782E7B-51D4-4DAE-9A0F-80F116137850</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>xpos</key>
-			<integer>520</integer>
+			<real>520</real>
 			<key>ypos</key>
-			<integer>1165</integer>
+			<real>1165</real>
 		</dict>
 		<key>B186CBDB-0806-4D20-A198-2BB658E4883C</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>2</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>200</integer>
+			<real>200</real>
 		</dict>
 		<key>B425771E-97B7-4360-9C1C-B9EADC167399</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>8</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>980</integer>
+			<real>980</real>
 		</dict>
 		<key>BD9B63B6-FCA5-48E0-8949-E8A824A28902</key>
 		<dict>
@@ -2898,45 +2909,45 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Pandoc</string>
 			<key>xpos</key>
-			<integer>860</integer>
+			<real>860</real>
 			<key>ypos</key>
-			<integer>270</integer>
+			<real>270</real>
 		</dict>
 		<key>C370DD12-9659-4C7C-9DDA-2EA4AB77E144</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>480</integer>
+			<real>480</real>
 			<key>ypos</key>
-			<integer>370</integer>
+			<real>370</real>
 		</dict>
 		<key>C55D7DE4-15E7-47C5-8970-2EF4EAFB6031</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>7</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>610</integer>
+			<real>610</real>
 		</dict>
 		<key>C7578519-6476-4BF5-91D2-A674D813EE7B</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>12</integer>
 			<key>xpos</key>
-			<integer>960</integer>
+			<real>960</real>
 			<key>ypos</key>
-			<integer>900</integer>
+			<real>900</real>
 		</dict>
 		<key>D5390C3E-D89A-4E54-BFE3-36C24C54DF3E</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>920</integer>
+			<real>920</real>
 			<key>ypos</key>
-			<integer>330</integer>
+			<real>330</real>
 		</dict>
 		<key>D712F168-F5CA-4A7F-8EE9-A0A6EFFFC81E</key>
 		<dict>
@@ -2945,36 +2956,36 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Link</string>
 			<key>xpos</key>
-			<integer>815</integer>
+			<real>815</real>
 			<key>ypos</key>
-			<integer>140</integer>
+			<real>140</real>
 		</dict>
 		<key>D9792099-269D-4DB6-8004-D464611EE841</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>12</integer>
 			<key>xpos</key>
-			<integer>490</integer>
+			<real>490</real>
 			<key>ypos</key>
-			<integer>900</integer>
+			<real>900</real>
 		</dict>
 		<key>DF797FDD-D3A9-4FE9-871E-7A5D2DA3153B</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>1</integer>
 			<key>xpos</key>
-			<integer>10</integer>
+			<real>30</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>E1D493E2-9690-4B5C-AB53-B09F20F8EE88</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>920</integer>
+			<real>920</real>
 			<key>ypos</key>
-			<integer>590</integer>
+			<real>590</real>
 		</dict>
 		<key>E387844F-BBC0-4405-9E28-2B3A5B9A7A18</key>
 		<dict>
@@ -2983,63 +2994,65 @@ A set of Bookends scripts to perform 11 different functions:
 			<key>note</key>
 			<string>Converts a plaintext formatted author-date citation to a LaTeX style temporary citation</string>
 			<key>xpos</key>
-			<integer>650</integer>
+			<real>650</real>
 			<key>ypos</key>
-			<integer>1165</integer>
+			<real>1165</real>
 		</dict>
 		<key>E50B449E-6EF4-448F-A5B3-152FD1FCAF09</key>
 		<dict>
 			<key>note</key>
 			<string>You can add this as a fallback search engine!</string>
 			<key>xpos</key>
-			<integer>910</integer>
+			<real>910</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>E977EE79-677D-4A9A-81F7-2925A1A9B442</key>
 		<dict>
 			<key>xpos</key>
-			<integer>1050</integer>
+			<real>1050</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>E9B9D1E5-771A-4047-9C97-7E93DB5EBE72</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>1020</integer>
+			<real>1020</real>
 			<key>ypos</key>
-			<integer>590</integer>
+			<real>590</real>
 		</dict>
 		<key>EABF7A78-1D69-46C2-84DC-200A4B715A40</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>1</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>FE092458-F99E-459C-AFCE-73416F547908</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<integer>270</integer>
+			<real>270</real>
 			<key>ypos</key>
-			<integer>360</integer>
+			<real>360</real>
 		</dict>
 		<key>FF840781-EBBE-44A2-988B-04C6344B7D55</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>10</integer>
 			<key>xpos</key>
-			<integer>985</integer>
+			<real>985</real>
 			<key>ypos</key>
-			<integer>460</integer>
+			<real>460</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
 	<key>variables</key>
 	<dict>
 		<key>BibTeXtoJSON</key>
