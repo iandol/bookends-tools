@@ -3,7 +3,7 @@ require 'json'
 #======class definition======
 class FindReferencesAll
 	attr_accessor :version, :using_alfred, :attachments_folder
-	VER = '1.1.3'.freeze
+	VER = '1.1.4'.freeze
 	#--------------------- constructor
 	def initialize
 		@version = VER
@@ -103,8 +103,12 @@ class FindReferencesAll
 
 			@date[i] = thisrec['thedate'].chomp.strip.split(/[\s\/-]/)[0]
 			@date[i] = '????' if @date[i].nil? || @date[i].empty?
-
-			@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
+			
+			if @BEVersion >= 15.1
+				@uuid[i] = thisrec['uniqueid'].to_s.chomp.strip
+			else
+				@uuid[i] = thisrec['uniqueID'].to_s.chomp.strip
+			end
 			@uuid[i] = '-1' if @uuid[i].nil? || @uuid[i].empty?
 
 			@attachments[i] = parseAttachments(thisrec['attachments'])
