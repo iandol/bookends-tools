@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
+# formatCitation.rb -- formats a citation for a given record ID
+
 require 'json'
+
 # this converts to -e line format so osascript can run, pass in a heredoc
 # beware this splits on \n so can't include them in the applescript itself
 def osascript(script)
@@ -12,7 +15,7 @@ return if ARGV.nil?
 id = ARGV[0].to_s
 rec = osascript <<-APPL
 tell application "Bookends"
-	return «event RubyRJSN» "#{id}" given string:"authors,thedate,uniqueID,user1"
+	return «event RubyRJSN» "#{id}" given string:"authors,thedate,uniqueid,user1"
 end tell
 APPL
 return if rec.nil? || rec.empty?
@@ -23,8 +26,8 @@ author = rec[0]['authors'].chomp.strip.split(',')[0]
 author = 'Unknown' if author.to_s.empty?
 date = rec[0]['thedate'].chomp.strip.split(%r{[\s\/-]})[0]
 date = '????' if date.nil? || date.empty?
-uuid = rec[0]['uniqueid'].to_s.chomp.strip
-uuid = '-1' if uuid.nil? || uuid.empty?
+uuid = rec[0].find { |k, v| k.downcase == 'uniqueid' }&.last.to_s.chomp.strip
+uuid = id if uuid.nil? || uuid.empty?
 key = rec[0]['user1'].to_s.chomp.strip
 key = '' if key.nil? || key.empty?
 
@@ -44,3 +47,5 @@ else
 	out = '{' + author + ', ' + date + ', #' + uuid + '}'
 end
 exec("echo '#{out}' | tr -d '\n' | pbcopy -Prefer txt")
+
+

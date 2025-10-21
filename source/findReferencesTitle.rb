@@ -90,7 +90,7 @@ class FindReferencesTitle
 		mylist = @list.join(',')
 		rec = osascript <<-APPL
 		tell application "Bookends"
-			return «event RubyRJSN» "#{mylist}" given string:"title,authors,editors,thedate,attachments,user1"
+			return «event RubyRJSN» "#{mylist}" given string:"title,authors,editors,thedate,attachments,uniqueid,user1"
 		end tell
 		APPL
 		rec = JSON.parse(rec)
