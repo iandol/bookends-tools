@@ -1,3 +1,5 @@
+> **Status:** I don't really use this workflow anymore, I tend to use Bookend's native floating citations for writing and some Applescript snippets for selecting DOIs/arXiv links in my browser to quick add. There are still some useful scripts like the OPML generation I occasionally use. If things don't work I may not get round to fix for a while, so I would love it if someone forked and gave this some polish.
+
 # Bookends Tools
 
 [Bookends](http://www.sonnysoftware.com/) is an excellent bibliographic/research manager for macOS. This Alfred workflow curates around 11 tools together in one interface to integrate between Bookends and other apps. You can use Alfred keywords (*be…*) and/or your preferred key binding to trigger them (edit the Hotkey trigger). The workflow is designed for Alfred 3 and 4, and should keep itself up-to-date using [OneUpdater](https://github.com/vitorgalvao/alfred-workflows/tree/master/OneUpdater).
